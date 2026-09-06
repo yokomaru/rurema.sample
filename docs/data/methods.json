@@ -10392,6 +10392,17 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Integer/i/gcdlcm.html"
     },
     {
+      "method_name": "hash",
+      "class_name": "Integer",
+      "method_kind": "instance_method",
+      "signatures": [
+        "hash -> Integer"
+      ],
+      "description": "self のハッシュ値を返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Integer/i/hash.html"
+    },
+    {
       "method_name": "inspect",
       "class_name": "Integer",
       "method_kind": "instance_method",
@@ -10908,7 +10919,7 @@
         "eval(expr, bind, fname = \"(eval)\", lineno = 1) -> object"
       ],
       "description": "文字列 expr を Ruby プログラムとして評価してその結果を返します。第2引数に\n[c:Binding] オブジェクトを与えた場合、そのオブジェクトを生成したコンテキストで文字列を評価します。",
-      "example": "a = nil\neval('a = RUBY_RELEASE_DATE')\np a # => \"2007-03-13\"\n\neval('def fuga;p 777 end')\np fuga # => 777\n\neval('raise RuntimeError', binding, 'XXX.rb', 4)\n# => XXX.rb:4: RuntimeError (RuntimeError)\n#       from ..:9",
+      "example": "# ソースファイルが UTF-8 の場合\np eval(\"__ENCODING__\")                        # => #<Encoding:UTF-8>\np eval(\"__ENCODING__\".encode(\"EUC-JP\"))       # => #<Encoding:EUC-JP>\np eval(\"# encoding: us-ascii\\n__ENCODING__\")  # => #<Encoding:US-ASCII>",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Kernel/m/eval.html"
     },
     {
@@ -16840,7 +16851,7 @@
         "fixed_encoding? -> bool"
       ],
       "description": "self が任意の ASCII 互換エンコーディングとマッチ可能なら false を、そうでないなら true を返します。",
-      "example": "# -*- coding:utf-8 -*-\n\nr = /a/\np r.fixed_encoding?                             # => false\np r.encoding                                    # => #<Encoding:US-ASCII>\np r =~ \"\\u{6666} a\"                             # => 2\np r =~ \"\\xa1\\xa2 a\".force_encoding(\"euc-jp\")    # => 2\np r =~ \"abc\".force_encoding(\"euc-jp\")           # => 0\n\nr = /a/u\np r.fixed_encoding?                             # => true\np r.encoding                                    # => #<Encoding:UTF-8>\np r =~ \"\\u{6666} a\"                             # => 2\nbegin\n  r =~ \"\\xa1\\xa2\".force_encoding(\"euc-jp\")\nrescue => e\n  e.class                                       # => Encoding::CompatibilityError\nend\np r =~ \"abc\".force_encoding(\"euc-jp\")           # => 0\n\nr = /\\u{6666}/\np r.fixed_encoding?                             # => true\np r.encoding                                    # => #<Encoding:UTF-8>\np r =~ \"\\u{6666} a\"                             # => 0\nbegin\n  r =~ \"\\xa1\\xa2\".force_encoding(\"euc-jp\")\nrescue => e\n  e.class                                       # => Encoding::CompatibilityError\nend\np r =~ \"abc\".force_encoding(\"euc-jp\")           # => nil",
+      "example": "r = /a/\np r.fixed_encoding?                             # => false\np r.encoding                                    # => #<Encoding:US-ASCII>\np r =~ \"\\u{6666} a\"                             # => 2\np r =~ \"\\xa1\\xa2 a\".force_encoding(\"euc-jp\")    # => 2\np r =~ \"abc\".force_encoding(\"euc-jp\")           # => 0\n\nr = /a/u\np r.fixed_encoding?                             # => true\np r.encoding                                    # => #<Encoding:UTF-8>\np r =~ \"\\u{6666} a\"                             # => 2\nbegin\n  r =~ \"\\xa1\\xa2\".force_encoding(\"euc-jp\")\nrescue => e\n  e.class                                       # => Encoding::CompatibilityError\nend\np r =~ \"abc\".force_encoding(\"euc-jp\")           # => 0\n\nr = /\\u{6666}/\np r.fixed_encoding?                             # => true\np r.encoding                                    # => #<Encoding:UTF-8>\np r =~ \"\\u{6666} a\"                             # => 0\nbegin\n  r =~ \"\\xa1\\xa2\".force_encoding(\"euc-jp\")\nrescue => e\n  e.class                                       # => Encoding::CompatibilityError\nend\np r =~ \"abc\".force_encoding(\"euc-jp\")           # => nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Regexp/i/fixed_encoding=3f.html"
     },
     {
@@ -18402,7 +18413,7 @@
         "bytesize -> Integer"
       ],
       "description": "文字列のバイト長を整数で返します。",
-      "example": "#coding:UTF-8\n# 実行結果は文字コードによって異なります。\np \"いろは\".size     # => 3\np \"いろは\".bytesize # => 9",
+      "example": "# 実行結果は文字コードによって異なります。\np \"いろは\".size     # => 3\np \"いろは\".bytesize # => 9",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/bytesize.html"
     },
     {
@@ -18572,7 +18583,7 @@
         "codepoints {|codepoint| block } -> self"
       ],
       "description": "文字列の各コードポイントの配列を返します。(self.each_codepoint.to_a と同じです)",
-      "example": "#coding:UTF-8\np \"hello わーるど\".codepoints\n# => [104, 101, 108, 108, 111, 32, 12431, 12540, 12427, 12393]",
+      "example": "p \"hello わーるど\".codepoints\n# => [104, 101, 108, 108, 111, 32, 12431, 12540, 12427, 12393]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/codepoints.html"
     },
     {
@@ -18729,7 +18740,7 @@
         "each_codepoint -> Enumerator"
       ],
       "description": "文字列の各コードポイントに対して繰り返します。",
-      "example": "#coding:UTF-8\np \"hello わーるど\".each_codepoint.to_a\n# => [104, 101, 108, 108, 111, 32, 12431, 12540, 12427, 12393]\np \"hello わーるど\".encode('euc-jp').each_codepoint.to_a\n# => [104, 101, 108, 108, 111, 32, 42223, 41404, 42219, 42185]",
+      "example": "p \"hello わーるど\".each_codepoint.to_a\n# => [104, 101, 108, 108, 111, 32, 12431, 12540, 12427, 12393]\np \"hello わーるど\".encode('euc-jp').each_codepoint.to_a\n# => [104, 101, 108, 108, 111, 32, 42223, 41404, 42219, 42185]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/each_codepoint.html"
     },
     {
@@ -18777,7 +18788,7 @@
         "encode(**options) -> String"
       ],
       "description": "self を指定したエンコーディングに変換した文字列を作成して返します。引数を2つ与えた場合、第二引数は変換元のエンコーディングを意味します。さもなくば self のエンコーディングが使われます。\n無引数の場合は、[m:Encoding.default_internal] が nil でなければそれが変換先のエンコーディングになり、かつ :invalid => :replace と :undef => :replace が指定されたと見なされ、nil ならば変換は行われません。",
-      "example": "#coding:UTF-8\ns = \"いろは\"\ns.encode(\"EUC-JP\")\ns.encode(Encoding::UTF_8)\n\n# U+00B7 MIDDLE DOT, U+2014 EM DASH は対応する文字が Windows-31J には\n# 存在しないのでそのまま変換しようとすると Encoding::UndefinedConversionError が発生する\nstr = \"\\u00b7\\u2014\"\nstr.encode(\"Windows-31J\", fallback: { \"\\u00b7\" => \"\\xA5\".force_encoding(\"Windows-31J\"),\n                                      \"\\u2014\" => \"\\x81\\x5C\".force_encoding(\"Windows-31J\") })",
+      "example": "s = \"いろは\"\ns.encode(\"EUC-JP\")\ns.encode(Encoding::UTF_8)\n\n# U+00B7 MIDDLE DOT, U+2014 EM DASH は対応する文字が Windows-31J には\n# 存在しないのでそのまま変換しようとすると Encoding::UndefinedConversionError が発生する\nstr = \"\\u00b7\\u2014\"\nstr.encode(\"Windows-31J\", fallback: { \"\\u00b7\" => \"\\xA5\".force_encoding(\"Windows-31J\"),\n                                      \"\\u2014\" => \"\\x81\\x5C\".force_encoding(\"Windows-31J\") })",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/encode.html"
     },
     {
@@ -18789,7 +18800,7 @@
         "encode!(encoding, from_encoding, options = nil) -> self"
       ],
       "description": "self を指定したエンコーディングに変換し、自身を置き換えます。引数を2つ与えた場合、第二引数は変換元のエンコーディングを意味します。そうでない場合は\nself のエンコーディングが使われます。変換後の self を返します。",
-      "example": "#coding:UTF-8\ns = \"いろは\"\ns.encode!(\"EUC-JP\")\ns.encode!(Encoding::UTF_8)",
+      "example": "s = \"いろは\"\ns.encode!(\"EUC-JP\")\ns.encode!(Encoding::UTF_8)",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/encode=21.html"
     },
     {
@@ -18800,7 +18811,7 @@
         "encoding   -> Encoding"
       ],
       "description": "文字列のエンコーディング情報を表現した Encoding オブジェクトを返します。",
-      "example": "# encoding: utf-8\nutf8_str = \"test\"\neuc_str = utf8_str.encode(\"EUC-JP\")\np utf8_str.encoding # => #<Encoding:UTF-8>\np euc_str.encoding  # => #<Encoding:EUC-JP>",
+      "example": "utf8_str = \"test\"\neuc_str = utf8_str.encode(\"EUC-JP\")\np utf8_str.encoding # => #<Encoding:UTF-8>\np euc_str.encoding  # => #<Encoding:EUC-JP>",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/encoding.html"
     },
     {
@@ -19953,7 +19964,7 @@
         "encoding   -> Encoding"
       ],
       "description": "シンボルに対応する文字列のエンコーディング情報を表現した [c:Encoding] オブジェクトを返します。",
-      "example": "# encoding: utf-8\n\np :foo.encoding      # => #<Encoding:US-ASCII>\np :あかさたな.encoding # => #<Encoding:UTF-8>",
+      "example": "p :foo.encoding      # => #<Encoding:US-ASCII>\np :あかさたな.encoding # => #<Encoding:UTF-8>",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Symbol/i/encoding.html"
     },
     {
@@ -19966,6 +19977,17 @@
       "description": "self の末尾が suffixes のいずれかであるとき true を返します。",
       "example": "p :hello.end_with?(\"ello\")             # => true\n\n# returns true if one of the +suffixes+ matches.\np :hello.end_with?(\"heaven\", \"ello\")   # => true\np :hello.end_with?(\"heaven\", \"paradise\") # => false",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Symbol/i/end_with=3f.html"
+    },
+    {
+      "method_name": "hash",
+      "class_name": "Symbol",
+      "method_kind": "instance_method",
+      "signatures": [
+        "hash -> Integer"
+      ],
+      "description": "self のハッシュ値を返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Symbol/i/hash.html"
     },
     {
       "method_name": "id2name",
