@@ -583,8 +583,7 @@
       "class_name": "Array",
       "method_kind": "instance_method",
       "signatures": [
-        "[](nth)    -> object | nil",
-        "at(nth)    -> object | nil"
+        "[](nth)    -> object | nil"
       ],
       "description": "nth 番目の要素を返します。nth 番目の要素が存在しない時には nil を返します。",
       "example": "a = [ \"a\", \"b\", \"c\", \"d\", \"e\" ]\np a[0]  # => \"a\"\np a[1]  # => \"b\"\np a[-1] # => \"e\"\np a[-2] # => \"d\"\np a[10] # => nil",
@@ -649,6 +648,17 @@
       "description": "配列の配列を検索して、その 0 番目の要素が key に == で等しい最初の要素を返します。該当する要素がなければ nil を返します。",
       "example": "ary = [[1,15], [2,25], [3,35]]\np ary.assoc(2)           # => [2, 25]\np ary.assoc(100)         # => nil\np ary.assoc(15)          # => nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/assoc.html"
+    },
+    {
+      "method_name": "at",
+      "class_name": "Array",
+      "method_kind": "instance_method",
+      "signatures": [
+        "at(nth)    -> object | nil"
+      ],
+      "description": "nth 番目の要素を返します。nth 番目の要素が存在しない時には nil を返します。\n[Array#[]](m:Array#[]) に整数を 1 つ渡した場合と同じです。",
+      "example": "a = [ \"a\", \"b\", \"c\", \"d\", \"e\" ]\np a.at(0)  # => \"a\"\np a.at(1)  # => \"b\"\np a.at(-1) # => \"e\"\np a.at(-2) # => \"d\"\np a.at(10) # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/at.html"
     },
     {
       "method_name": "bsearch",
@@ -742,12 +752,22 @@
       "class_name": "Array",
       "method_kind": "instance_method",
       "signatures": [
-        "compact     -> Array",
+        "compact     -> Array"
+      ],
+      "description": "自身から nil を取り除いた配列を生成して返します。",
+      "example": "ary = [1, nil, 2, nil, 3, nil]\np ary.compact   # => [1, 2, 3]\np ary           # => [1, nil, 2, nil, 3, nil]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/compact.html"
+    },
+    {
+      "method_name": "compact!",
+      "class_name": "Array",
+      "method_kind": "instance_method",
+      "signatures": [
         "compact!    -> self | nil"
       ],
-      "description": "compact は自身から nil を取り除いた配列を生成して返します。\ncompact! は自身から破壊的に nil を取り除き、変更が行われた場合は self を、そうでなければ nil を返します。",
-      "example": "ary = [1, nil, 2, nil, 3, nil]\np ary.compact   # => [1, 2, 3]\np ary           # => [1, nil, 2, nil, 3, nil]\nary.compact!\np ary           # => [1, 2, 3]\np ary.compact!  # => nil",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/compact.html"
+      "description": "自身から破壊的に nil を取り除き、変更が行われた場合は self を、そうでなければ nil を返します。",
+      "example": "ary = [1, nil, 2, nil, 3, nil]\nary.compact!\np ary           # => [1, 2, 3]\np ary.compact!  # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/compact=21.html"
     },
     {
       "method_name": "concat",
@@ -825,12 +845,10 @@
       "method_kind": "instance_method",
       "signatures": [
         "delete_if {|x| ... }    -> self",
-        "reject! {|x| ... }      -> self | nil",
-        "delete_if               -> Enumerator",
-        "reject!                 -> Enumerator"
+        "delete_if               -> Enumerator"
       ],
-      "description": "要素を順番にブロックに渡して評価し、その結果が真になった要素をすべて削除します。\ndelete_if は常に self を返しますが、reject! は要素が 1 つ以上削除されれば self を、\n1 つも削除されなければ nil を返します。",
-      "example": "a = [0, 1, 2, 3, 4, 5]\na.delete_if{|x| x % 2 == 0}\np a # => [1, 3, 5]\n\na = [0, 1, 2, 3, 4, 5]\ne = a.reject!\ne.each{|i| i % 2 == 0}\np a                    # => [1, 3, 5]  もとの配列から削除されていることに注意。",
+      "description": "要素を順番にブロックに渡して評価し、その結果が真になった要素をすべて削除します。\ndelete_if は常に self を返します。",
+      "example": "a = [0, 1, 2, 3, 4, 5]\na.delete_if{|x| x % 2 == 0}\np a # => [1, 3, 5]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/delete_if.html"
     },
     {
@@ -1021,12 +1039,22 @@
       "class_name": "Array",
       "method_kind": "instance_method",
       "signatures": [
-        "flatten(lv = nil)     -> Array",
+        "flatten(lv = nil)     -> Array"
+      ],
+      "description": "自身を再帰的に平坦化した配列を生成して返します。\nlv が指定された場合、lv の深さまで再帰的に平坦化します。",
+      "example": "# 自身を再帰的に平坦化する例。\na = [1, [2, 3, [4], 5]]\np a.flatten                     # => [1, 2, 3, 4, 5]\np a                             # => [1, [2, 3, [4], 5]]\n\n# 平坦化の再帰の深さを指定する例。\na = [ 1, 2, [3, [4, 5] ] ]\np a.flatten(1)            # => [1, 2, 3, [4, 5]]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/flatten.html"
+    },
+    {
+      "method_name": "flatten!",
+      "class_name": "Array",
+      "method_kind": "instance_method",
+      "signatures": [
         "flatten!(lv = nil)    -> self | nil"
       ],
-      "description": "flatten は自身を再帰的に平坦化した配列を生成して返します。flatten! は自身を再帰的かつ破壊的に平坦化し、平坦化が行われた場合は self をそうでない場合は nil を返します。\nlv が指定された場合、lv の深さまで再帰的に平坦化します。",
-      "example": "# 自身を再帰的に平坦化する例。\na = [1, [2, 3, [4], 5]]\np a.flatten                     # => [1, 2, 3, 4, 5]\np a                             # => [1, [2, 3, [4], 5]]\n\n# 自身を破壊的に平坦化する例。\na = [[[1, [2, 3]]]]\np a.flatten!                    # => [1, 2, 3]\np a                             # => [1, 2, 3]\n\n# 平坦化が行われない場合は nil を返す。\np [1, 2, 3].flatten!            # => nil\n\n# 平坦化の再帰の深さを指定する例。\na = [ 1, 2, [3, [4, 5] ] ]\np a.flatten(1)            # => [1, 2, 3, [4, 5]]",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/flatten.html"
+      "description": "自身を再帰的かつ破壊的に平坦化し、平坦化が行われた場合は self をそうでない場合は nil を返します。\nlv が指定された場合、lv の深さまで再帰的に平坦化します。",
+      "example": "# 自身を破壊的に平坦化する例。\na = [[[1, [2, 3]]]]\np a.flatten!                    # => [1, 2, 3]\np a                             # => [1, 2, 3]\n\n# 平坦化が行われない場合は nil を返す。\np [1, 2, 3].flatten!            # => nil\n\n# 平坦化の再帰の深さを指定する例。\na = [ 1, 2, [3, [4, 5] ] ]\np a.flatten!(1)           # => [1, 2, 3, [4, 5]]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/flatten=21.html"
     },
     {
       "method_name": "hash",
@@ -1287,6 +1315,18 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/reject.html"
     },
     {
+      "method_name": "reject!",
+      "class_name": "Array",
+      "method_kind": "instance_method",
+      "signatures": [
+        "reject! {|x| ... }      -> self | nil",
+        "reject!                 -> Enumerator"
+      ],
+      "description": "要素を順番にブロックに渡して評価し、その結果が真になった要素をすべて削除します。\n要素が 1 つ以上削除されれば self を、1 つも削除されなければ nil を返します。",
+      "example": "a = [0, 1, 2, 3, 4, 5]\np a.reject!{|x| x % 2 == 0}  # => [1, 3, 5]\np a.reject!{|x| x % 2 == 0}  # => nil\n\na = [0, 1, 2, 3, 4, 5]\ne = a.reject!\ne.each{|i| i % 2 == 0}\np a                    # => [1, 3, 5]  もとの配列から削除されていることに注意。",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/reject=21.html"
+    },
+    {
       "method_name": "repeated_combination",
       "class_name": "Array",
       "method_kind": "instance_method",
@@ -1470,13 +1510,23 @@
       "method_kind": "instance_method",
       "signatures": [
         "sort                -> Array",
-        "sort!               -> self",
-        "sort {|a, b| ... }  -> Array",
-        "sort! {|a, b| ... } -> self"
+        "sort {|a, b| ... }  -> Array"
       ],
-      "description": "全ての要素を昇順にソートします。\n要素同士の比較は <=> 演算子を使って行います。",
+      "description": "全ての要素を昇順にソートした配列を生成して返します。self は変更しません。\n要素同士の比較は <=> 演算子を使って行います。",
       "example": "ary1 = [ \"d\", \"a\", \"e\", \"c\", \"b\" ]\np ary1.sort                             # => [\"a\", \"b\", \"c\", \"d\", \"e\"]\n\nary2 = [\"9\", \"7\", \"10\", \"11\", \"8\"]\np ary2.sort                             # => [\"10\", \"11\", \"7\", \"8\", \"9\"] (文字列としてソートするとこうなる)\np ary2.sort{|a, b| a.to_i <=> b.to_i }  # => [\"7\", \"8\", \"9\", \"10\", \"11\"] (ブロックを使って数字としてソート)\n\n# sort_by を使っても良い\np ary2.sort_by{|x| x.to_i }             # => [\"7\", \"8\", \"9\", \"10\", \"11\"]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/sort.html"
+    },
+    {
+      "method_name": "sort!",
+      "class_name": "Array",
+      "method_kind": "instance_method",
+      "signatures": [
+        "sort!               -> self",
+        "sort! {|a, b| ... } -> self"
+      ],
+      "description": "全ての要素を昇順に破壊的にソートし、self を返します。\n要素同士の比較は <=> 演算子を使って行います。\nブロックとともに呼び出された時には、要素同士の比較をブロックを用いて行います。\n比較やブロックの扱いは [m:Array#sort] と同じです。",
+      "example": "ary1 = [ \"d\", \"a\", \"e\", \"c\", \"b\" ]\nary1.sort!\np ary1                                  # => [\"a\", \"b\", \"c\", \"d\", \"e\"]\n\nary2 = [\"9\", \"7\", \"10\", \"11\", \"8\"]\nary2.sort!{|a, b| a.to_i <=> b.to_i }\np ary2                                  # => [\"7\", \"8\", \"9\", \"10\", \"11\"]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/sort=21.html"
     },
     {
       "method_name": "sort_by!",
@@ -1587,13 +1637,23 @@
       "method_kind": "instance_method",
       "signatures": [
         "uniq     -> Array",
-        "uniq!    -> self | nil",
-        "uniq {|item| ... } -> Array",
-        "uniq! {|item| ... } -> self | nil"
+        "uniq {|item| ... } -> Array"
       ],
-      "description": "uniq は配列から重複した要素を取り除いた新しい配列を返します。\nuniq! は削除を破壊的に行い、削除が行われた場合は self を、そうでなければnil を返します。",
+      "description": "配列から重複した要素を取り除いた新しい配列を返します。",
       "example": "p [1, 1, 1].uniq         # => [1]\np [1, 4, 1].uniq         # => [1, 4]\np [1, 3, 2, 2, 3].uniq   # => [1, 3, 2]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/uniq.html"
+    },
+    {
+      "method_name": "uniq!",
+      "class_name": "Array",
+      "method_kind": "instance_method",
+      "signatures": [
+        "uniq!    -> self | nil",
+        "uniq! {|item| ... } -> self | nil"
+      ],
+      "description": "配列から重複した要素を破壊的に取り除きます。\n削除が行われた場合は self を、そうでなければnil を返します。",
+      "example": "p [1, 1, 1].uniq!        # => [1]\np [1, 4, 1].uniq!        # => [1, 4]\np [1, 3, 2, 2, 3].uniq!  # => [1, 3, 2]\np [1, 3, 2].uniq!        # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/uniq=21.html"
     },
     {
       "method_name": "values_at",
@@ -2637,11 +2697,10 @@
       "class_name": "Dir",
       "method_kind": "instance_method",
       "signatures": [
-        "pos=(pos)",
-        "seek(pos)    -> self"
+        "pos=(pos)"
       ],
       "description": "ディレクトリストリームの読み込み位置を pos に移動させます。\npos は [m:Dir#tell] で与えられた値でなければなりません。",
-      "example": "Dir.open(\"testdir\") do |d|\n  p d.read                 # => \".\"\n  i = d.tell               # => 12\n  p d.read                 # => \"..\"\n  p d.seek(i)              # => #<Dir:0x401b3c40>\n  p d.read                 # => \"..\"\nend",
+      "example": "Dir.open(\"testdir\") do |d|\n  p d.read                 # => \".\"\n  i = d.tell               # => 12\n  p d.read                 # => \"..\"\n  d.pos = i\n  p d.read                 # => \"..\"\nend",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/i/pos=3d.html"
     },
     {
@@ -2667,16 +2726,25 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/i/rewind.html"
     },
     {
+      "method_name": "seek",
+      "class_name": "Dir",
+      "method_kind": "instance_method",
+      "signatures": [
+        "seek(pos)    -> self"
+      ],
+      "description": "ディレクトリストリームの読み込み位置を pos に移動させます。\npos は [m:Dir#tell] で与えられた値でなければなりません。",
+      "example": "Dir.open(\"testdir\") do |d|\n  p d.read                 # => \".\"\n  i = d.tell               # => 12\n  p d.read                 # => \"..\"\n  p d.seek(i)              # => #<Dir:0x401b3c40>\n  p d.read                 # => \"..\"\nend",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/i/seek.html"
+    },
+    {
       "method_name": "[]",
       "class_name": "Dir",
       "method_kind": "class_method",
       "signatures": [
-        "Dir.[](*pattern, base: nil, sort: true)                            -> [String]",
-        "Dir.glob(pattern, flags = 0, base: nil, sort: true)                -> [String]",
-        "Dir.glob(pattern, flags = 0, base: nil, sort: true) {|file| ...}   -> nil"
+        "Dir.[](*pattern, base: nil, sort: true)                            -> [String]"
       ],
-      "description": "ワイルドカードの展開を行い、パターンにマッチするファイル名を文字列の配列として返します。\nパターンにマッチするファイルがない場合は空の配列を返します。",
-      "example": "p Dir.glob(\"*\")                    #=> [\"bar\", \"foo\"]\np Dir.glob(\"*\", File::FNM_DOTMATCH)  #=> [\".\", \"bar\", \"foo\"]",
+      "description": "ワイルドカードの展開を行い、パターンにマッチするファイル名を文字列の配列として返します。\nflags を指定しない [m:Dir.glob] と同じです。パターンやワイルドカードの詳細は [m:Dir.glob] を参照してください。",
+      "example": "p Dir[\"*\"]           # => [\"foo\", \"bar\"]\np Dir[\"f*\", \"b*\"]    # => [\"foo\", \"bar\"]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/s/=5b=5d.html"
     },
     {
@@ -2827,6 +2895,18 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/s/getwd.html"
     },
     {
+      "method_name": "glob",
+      "class_name": "Dir",
+      "method_kind": "class_method",
+      "signatures": [
+        "Dir.glob(pattern, flags = 0, base: nil, sort: true)                -> [String]",
+        "Dir.glob(pattern, flags = 0, base: nil, sort: true) {|file| ...}   -> nil"
+      ],
+      "description": "ワイルドカードの展開を行い、パターンにマッチするファイル名を文字列の配列として返します。\nパターンにマッチするファイルがない場合は空の配列を返します。",
+      "example": "p Dir.glob(\"*\")                    #=> [\"bar\", \"foo\"]\np Dir.glob(\"*\", File::FNM_DOTMATCH)  #=> [\".\", \"bar\", \"foo\"]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/s/glob.html"
+    },
+    {
       "method_name": "home",
       "class_name": "Dir",
       "method_kind": "class_method",
@@ -2855,15 +2935,25 @@
       "method_kind": "class_method",
       "signatures": [
         "Dir.new(path)                                                      -> Dir",
-        "Dir.new(path, encoding: Encoding.find(\"filesystem\"))               -> Dir",
+        "Dir.new(path, encoding: Encoding.find(\"filesystem\"))               -> Dir"
+      ],
+      "description": "path に対するディレクトリストリームをオープンして返します。",
+      "example": "require 'tmpdir'\n\nDir.mktmpdir do |tmpdir|\n  d = Dir.new(tmpdir)\n  p d.class         # => Dir\n  p d.read.encoding # => #<Encoding:UTF-8>\n  d.close\n\n  d = Dir.new(tmpdir, encoding: Encoding::UTF_8)\n  p d.class         # => Dir\n  p d.read.encoding # => #<Encoding:UTF-8>\n  d.close\nend",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/s/new.html"
+    },
+    {
+      "method_name": "open",
+      "class_name": "Dir",
+      "method_kind": "class_method",
+      "signatures": [
         "Dir.open(path)                                                     -> Dir",
         "Dir.open(path, encoding: Encoding.find(\"filesystem\"))              -> Dir",
         "Dir.open(path) {|dir| ...}                                         -> object",
         "Dir.open(path, encoding: Encoding.find(\"filesystem\")) {|dir| ...}  -> object"
       ],
       "description": "path に対するディレクトリストリームをオープンして返します。",
-      "example": "require 'tmpdir'\n\nDir.mktmpdir do |tmpdir|\n  d = Dir.new(tmpdir)\n  p d.class         # => Dir\n  p d.read.encoding # => #<Encoding:UTF-8>\n  d.close\n\n  d = Dir.new(tmpdir, encoding: Encoding::UTF_8)\n  p d.class         # => Dir\n  p d.read.encoding # => #<Encoding:UTF-8>\n  d.close\nend",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/s/new.html"
+      "example": "require 'tmpdir'\n\nDir.mktmpdir do |tmpdir|\n  d = Dir.open(tmpdir, encoding: Encoding::UTF_8)\n  p d.class         # => Dir\n  p d.read.encoding # => #<Encoding:UTF-8>\n  d.close\n\n  Dir.open(tmpdir, encoding: Encoding::UTF_8) do |d|\n    p d.class         # => Dir\n    p d.read.encoding # => #<Encoding:UTF-8>\n  end\nend",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Dir/s/open.html"
     },
     {
       "method_name": "[]",
@@ -5170,7 +5260,7 @@
       "class_name": "Errno::EXXX",
       "method_kind": "class_method",
       "signatures": [
-        "Errno::EXXX.new() -> Errno::EXXX",
+        "Errno::EXXX.new -> Errno::EXXX",
         "Errno::EXXX.new(error_message) -> Errno::EXXX"
       ],
       "description": "Errno::EXXX オブジェクトを生成して返します。",
@@ -5294,12 +5384,22 @@
       "class_name": "Exception",
       "method_kind": "class_method",
       "signatures": [
-        "Exception.new(error_message = nil)       -> Exception",
         "Exception.exception(error_message = nil) -> Exception"
+      ],
+      "description": "例外オブジェクトを生成して返します。引数無しの [m:Exception.new] と同じです。",
+      "example": "e = Exception.exception(\"some message\")\np e         # => #<Exception: some message>\np e.message # => \"some message\"",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Exception/s/exception.html"
+    },
+    {
+      "method_name": "new",
+      "class_name": "Exception",
+      "method_kind": "class_method",
+      "signatures": [
+        "Exception.new(error_message = nil)       -> Exception"
       ],
       "description": "例外オブジェクトを生成して返します。",
       "example": "e = Exception.new(\"some message\")\np e         # => #<Exception: some message>\np e.message # => \"some message\"",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Exception/s/exception.html"
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Exception/s/new.html"
     },
     {
       "method_name": "to_tty?",
@@ -5447,12 +5547,22 @@
       "class_name": "Fiber",
       "method_kind": "instance_method",
       "signatures": [
-        "storage -> Hash | nil",
-        "storage=(hash)"
+        "storage -> Hash | nil"
       ],
-      "description": "self が表すファイバーの fiber storage を取得、設定します。",
+      "description": "self が表すファイバーの fiber storage を取得します。",
       "example": "Fiber[:key] = 1\np Fiber.current.storage # => {key: 1}\n\n# 返り値は複製なので、変更しても fiber storage には影響しない\nFiber.current.storage[:key] = 2\np Fiber[:key]           # => 1",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Fiber/i/storage.html"
+    },
+    {
+      "method_name": "storage=",
+      "class_name": "Fiber",
+      "method_kind": "instance_method",
+      "signatures": [
+        "storage=(hash)"
+      ],
+      "description": "self が表すファイバーの fiber storage を設定します。\nfiber storage については [m:Fiber#storage] を参照してください。",
+      "example": "Fiber[:key] = 1\n\nFiber.current.storage = {other: 2} # 実験的な機能である旨の警告が出る\np Fiber[:key]   # => nil\np Fiber[:other] # => 2",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Fiber/i/storage=3d.html"
     },
     {
       "method_name": "transfer",
@@ -6068,13 +6178,23 @@
       "class_name": "File",
       "method_kind": "class_method",
       "signatures": [
-        "File.new(path, mode = \"r\", perm = 0666, **opts)                -> File",
-        "File.open(path, mode = \"r\", perm = 0666, **opts)               -> File",
-        "File.open(path, mode = \"r\", perm = 0666, **opts) {|file| ... } -> object"
+        "File.new(path, mode = \"r\", perm = 0666, **opts)                -> File"
       ],
       "description": "path で指定されるファイルをオープンし、[c:File] オブジェクトを生成して返します。",
       "example": "f = File.new(\"testfile\", \"r\")\np f.class # => File\nf.close",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/File/s/new.html"
+    },
+    {
+      "method_name": "open",
+      "class_name": "File",
+      "method_kind": "class_method",
+      "signatures": [
+        "File.open(path, mode = \"r\", perm = 0666, **opts)               -> File",
+        "File.open(path, mode = \"r\", perm = 0666, **opts) {|file| ... } -> object"
+      ],
+      "description": "path で指定されるファイルをオープンし、[c:File] オブジェクトを生成して返します。",
+      "example": "f = File.open(\"testfile\", \"r\")\np f.class # => File\nf.close",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/File/s/open.html"
     },
     {
       "method_name": "owned?",
@@ -7486,11 +7606,10 @@
       "class_name": "Float",
       "method_kind": "instance_method",
       "signatures": [
-        "to_i -> Integer",
-        "truncate(ndigits = 0) -> Integer | Float"
+        "to_i -> Integer"
       ],
       "description": "小数点以下を切り捨てて値を整数に変換して返します。",
-      "example": "p 2.8.truncate         # => 2\np (-2.8).truncate      # => -2\np 1.234567.truncate(2) # => 1.23\np 34567.89.truncate(-2)  # => 34500",
+      "example": "p 2.8.to_i       # => 2\np (-2.8).to_i    # => -2",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Float/i/to_i.html"
     },
     {
@@ -7503,6 +7622,17 @@
       "description": "self を [c:Rational] オブジェクトに変換したものを返します。",
       "example": "p 0.0.to_r  # => (0/1)\np 0.75.to_r # => (3/4)",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Float/i/to_r.html"
+    },
+    {
+      "method_name": "truncate",
+      "class_name": "Float",
+      "method_kind": "instance_method",
+      "signatures": [
+        "truncate(ndigits = 0) -> Integer | Float"
+      ],
+      "description": "小数点以下を切り捨てて値を整数に変換して返します。",
+      "example": "p 2.8.truncate         # => 2\np (-2.8).truncate      # => -2\np 1.234567.truncate(2) # => 1.23\np 34567.89.truncate(-2)  # => 34500",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Float/i/truncate.html"
     },
     {
       "method_name": "zero?",
@@ -7655,12 +7785,22 @@
       "class_name": "GC",
       "method_kind": "class_method",
       "signatures": [
-        "GC.measure_total_time -> bool",
+        "GC.measure_total_time -> bool"
+      ],
+      "description": "GC にかかった時間を計測するかどうかを返します。\n既定では計測が有効です。",
+      "example": "p GC.measure_total_time # => true",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/GC/s/measure_total_time.html"
+    },
+    {
+      "method_name": "measure_total_time=",
+      "class_name": "GC",
+      "method_kind": "class_method",
+      "signatures": [
         "GC.measure_total_time=(flag)"
       ],
-      "description": "GC にかかった時間を計測するかどうかを取得、設定します。\n既定では計測が有効です。",
+      "description": "GC にかかった時間を計測するかどうかを設定します。\n既定では計測が有効です。",
       "example": "p GC.measure_total_time # => true\n\nGC.measure_total_time = false\np GC.measure_total_time # => false\n\nGC.measure_total_time = nil\np GC.measure_total_time # => false",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/GC/s/measure_total_time.html"
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/GC/s/measure_total_time=3d.html"
     },
     {
       "method_name": "start",
@@ -7743,6 +7883,17 @@
       "description": "コンパクションの参照の一貫性を検証します。",
       "example": null,
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/GC/s/verify_compaction_references.html"
+    },
+    {
+      "method_name": "verify_internal_consistency",
+      "class_name": "GC",
+      "method_kind": "class_method",
+      "signatures": [
+        "GC.verify_internal_consistency -> nil"
+      ],
+      "description": "GC 内部の一貫性を検証します。",
+      "example": "p GC.verify_internal_consistency # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/GC/s/verify_internal_consistency.html"
     },
     {
       "method_name": "clear",
@@ -7951,12 +8102,22 @@
       "class_name": "Hash",
       "method_kind": "instance_method",
       "signatures": [
-        "compact -> Hash",
+        "compact -> Hash"
+      ],
+      "description": "自身から value が nil のもの取り除いた Hash を生成して返します。",
+      "example": "hash = {a: 1, b: nil, c: 3}\np hash.compact  # => {:a=>1, :c=>3}\np hash          # => {:a=>1, :b=>nil, :c=>3}",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/compact.html"
+    },
+    {
+      "method_name": "compact!",
+      "class_name": "Hash",
+      "method_kind": "instance_method",
+      "signatures": [
         "compact! -> self | nil"
       ],
-      "description": "compact は自身から value が nil のもの取り除いた Hash を生成して返します。 compact! は自身から破壊的に value が nil のものを取り除き、変更が行われた場合は self を、そうでなければ nil を返します。",
-      "example": "hash = {a: 1, b: nil, c: 3}\np hash.compact  # => {:a=>1, :c=>3}\np hash          # => {:a=>1, :b=>nil, :c=>3}\nhash.compact!\np hash          # => {:a=>1, :c=>3}\np hash.compact! # =>  nil",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/compact.html"
+      "description": "自身から破壊的に value が nil のものを取り除き、変更が行われた場合は self を、そうでなければ nil を返します。",
+      "example": "hash = {a: 1, b: nil, c: 3}\nhash.compact!\np hash          # => {:a=>1, :c=>3}\np hash.compact! # =>  nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/compact=21.html"
     },
     {
       "method_name": "compare_by_identity",
@@ -8054,12 +8215,10 @@
       "method_kind": "instance_method",
       "signatures": [
         "delete_if -> Enumerator",
-        "reject!   -> Enumerator",
-        "delete_if {|key, value| ... } -> self",
-        "reject! {|key, value| ... } -> self|nil"
+        "delete_if {|key, value| ... } -> self"
       ],
       "description": "キーと値を引数としてブロックを評価した結果が真であるような要素を self から削除します。",
-      "example": "h = { 2 => \"8\" ,4 => \"6\" ,6 => \"4\" ,8 => \"2\" }\n\np h.reject!{|key, value| key.to_i < value.to_i }   # => { 6 => \"4\", 8 => \"2\" }\np h                                                # => { 6 => \"4\", 8 => \"2\" }\n\np h.delete_if{|key, value| key.to_i < value.to_i } # => { 6 => \"4\", 8 => \"2\" }\np h.reject!{|key, value| key.to_i < value.to_i }   # => nil",
+      "example": "h = { 2 => \"8\" ,4 => \"6\" ,6 => \"4\" ,8 => \"2\" }\n\np h.delete_if{|key, value| key.to_i < value.to_i } # => { 6 => \"4\", 8 => \"2\" }\np h.delete_if{|key, value| key.to_i < value.to_i } # => { 6 => \"4\", 8 => \"2\" }",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/delete_if.html"
     },
     {
@@ -8188,15 +8347,13 @@
       "class_name": "Hash",
       "method_kind": "instance_method",
       "signatures": [
-        "keep_if -> Enumerator",
-        "keep_if {|key, value| ... } -> self",
         "select! -> Enumerator",
         "select! {|key, value| ... } -> self | nil",
         "filter! -> Enumerator",
         "filter! {|key, value| ... }   -> self | nil"
       ],
       "description": "キーと値を引数としてブロックを評価した結果が真であるような要素を self\nに残します。",
-      "example": "h1 = {}\nc = (\"a\"..\"g\")\nc.each_with_index {|e, i| h1[i] = e }\n\nh2 = h1.dup\np h1.select!  # => #<Enumerator: {0=>\"a\", 1=>\"b\", 2=>\"c\", 3=>\"d\", 4=>\"e\", 5=>\"f\", 6=>\"g\"}:select!>\n\np h1.select! { |k, v| k % 3 == 0 }  # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}\np h1.select! { |k, v| true }      # => nil\np h2.keep_if { |k, v| k % 3 == 0 }  # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}\np h2.keep_if { |k, v| true }      # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}",
+      "example": "h1 = {}\nc = (\"a\"..\"g\")\nc.each_with_index {|e, i| h1[i] = e }\n\np h1.select!  # => #<Enumerator: {0=>\"a\", 1=>\"b\", 2=>\"c\", 3=>\"d\", 4=>\"e\", 5=>\"f\", 6=>\"g\"}:select!>\n\np h1.select! { |k, v| k % 3 == 0 }  # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}\np h1.select! { |k, v| true }      # => nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/filter=21.html"
     },
     {
@@ -8269,6 +8426,18 @@
       "description": "値からキーへのハッシュを作成して返します。",
       "example": "h = { \"a\" => 0, \"b\" => 100, \"c\" => 200, \"d\" => 300, \"e\" => 300 }\np h.invert   # => {0=>\"a\", 100=>\"b\", 200=>\"c\", 300=>\"e\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/invert.html"
+    },
+    {
+      "method_name": "keep_if",
+      "class_name": "Hash",
+      "method_kind": "instance_method",
+      "signatures": [
+        "keep_if -> Enumerator",
+        "keep_if {|key, value| ... } -> self"
+      ],
+      "description": "キーと値を引数としてブロックを評価した結果が真であるような要素を self\nに残します。",
+      "example": "h2 = {}\nc = (\"a\"..\"g\")\nc.each_with_index {|e, i| h2[i] = e }\n\np h2.keep_if  # => #<Enumerator: {0=>\"a\", 1=>\"b\", 2=>\"c\", 3=>\"d\", 4=>\"e\", 5=>\"f\", 6=>\"g\"}:keep_if>\n\np h2.keep_if { |k, v| k % 3 == 0 }  # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}\np h2.keep_if { |k, v| true }      # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/keep_if.html"
     },
     {
       "method_name": "key",
@@ -8363,6 +8532,18 @@
       "description": "self を複製して、ブロックを評価した値が真になる要素を削除したハッシュを返します。",
       "example": "h = { 2 =>\"8\" ,4 =>\"6\" ,6 =>\"4\" ,8 =>\"2\" }\n\np h.reject{|key, value| key.to_i < value.to_i} # => {6=>\"4\", 8=>\"2\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/reject.html"
+    },
+    {
+      "method_name": "reject!",
+      "class_name": "Hash",
+      "method_kind": "instance_method",
+      "signatures": [
+        "reject!   -> Enumerator",
+        "reject! {|key, value| ... } -> self|nil"
+      ],
+      "description": "キーと値を引数としてブロックを評価した結果が真であるような要素を self から削除します。",
+      "example": "h = { 2 => \"8\" ,4 => \"6\" ,6 => \"4\" ,8 => \"2\" }\n\np h.reject!{|key, value| key.to_i < value.to_i }   # => { 6 => \"4\", 8 => \"2\" }\np h                                                # => { 6 => \"4\", 8 => \"2\" }\np h.reject!{|key, value| key.to_i < value.to_i }   # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/reject=21.html"
     },
     {
       "method_name": "replace",
@@ -9314,6 +9495,51 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/IO/i/ungetc.html"
     },
     {
+      "method_name": "wait",
+      "class_name": "IO",
+      "method_kind": "instance_method",
+      "signatures": [
+        "wait(events, timeout)              -> Integer | nil",
+        "wait(*mode, timeout = nil)          -> self | true | nil"
+      ],
+      "description": "self が指定したイベント(読み込み可能・書き込み可能・優先データの受信)の準備ができるまでブロックします。",
+      "example": "r, w = IO.pipe\n\np r.wait(IO::READABLE, 0)                 # => nil\np w.wait(IO::WRITABLE, 0) == IO::WRITABLE # => true\np r.wait(:read, 0)                        # => nil\n\nw.write(\"x\")\np r.wait(IO::READABLE, 0) == IO::READABLE # => true\np r.wait(:read, 0).equal?(r)              # => true",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/IO/i/wait.html"
+    },
+    {
+      "method_name": "wait_priority",
+      "class_name": "IO",
+      "method_kind": "instance_method",
+      "signatures": [
+        "wait_priority(timeout = nil) -> self | true | false | nil"
+      ],
+      "description": "self が優先データを受信して読み込み可能になるまでブロックし、読み込み可能になったら真値を返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/IO/i/wait_priority.html"
+    },
+    {
+      "method_name": "wait_readable",
+      "class_name": "IO",
+      "method_kind": "instance_method",
+      "signatures": [
+        "wait_readable(timeout = nil) -> self | true | nil"
+      ],
+      "description": "self が読み込み可能になるまでブロックし、読み込み可能になったら真値を返します。",
+      "example": "r, w = IO.pipe\n\np r.wait_readable(0)           # => nil\nw.write(\"x\")\np r.wait_readable(0).equal?(r) # => true",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/IO/i/wait_readable.html"
+    },
+    {
+      "method_name": "wait_writable",
+      "class_name": "IO",
+      "method_kind": "instance_method",
+      "signatures": [
+        "wait_writable(timeout = nil) -> self | nil"
+      ],
+      "description": "self が書き込み可能になるまでブロックし、書き込み可能になったら self を返します。",
+      "example": "r, w = IO.pipe\n\np w.wait_writable(0).equal?(w) # => true",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/IO/i/wait_writable.html"
+    },
+    {
       "method_name": "write",
       "class_name": "IO",
       "method_kind": "instance_method",
@@ -9375,9 +9601,7 @@
       "method_kind": "class_method",
       "signatures": [
         "IO.new(fd, mode = \"r\", **opts)                -> IO",
-        "IO.for_fd(fd, mode = \"r\", **opts)             -> IO",
-        "IO.open(fd, mode = \"r\", **opts)               -> IO",
-        "IO.open(fd, mode = \"r\", **opts) {|io| ... }   -> object"
+        "IO.for_fd(fd, mode = \"r\", **opts)             -> IO"
       ],
       "description": "オープン済みのファイルディスクリプタ fd に対する新しい\nIO オブジェクトを生成して返します。",
       "example": "io = IO.new(IO.sysopen(\"testfile\"))\np io.class # => IO\nio.close",
@@ -9394,6 +9618,18 @@
       "description": "path で指定されたファイルの各行を引数としてブロックを繰り返し実行します。\npath のオープンに成功すれば nil を返します。",
       "example": "IO.write(\"testfile\", \"line1\\nline2,\\nline3\\n\")\np IO.foreach(\"testfile\")  # => #<Enumerator: IO:foreach(\"testfile\")>\nIO.foreach(\"testfile\") { |x| print \"GOT \", x }\n# => GOT line1\n# GOT line2,\n# GOT line3",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/IO/s/foreach.html"
+    },
+    {
+      "method_name": "open",
+      "class_name": "IO",
+      "method_kind": "class_method",
+      "signatures": [
+        "IO.open(fd, mode = \"r\", **opts)               -> IO",
+        "IO.open(fd, mode = \"r\", **opts) {|io| ... }   -> object"
+      ],
+      "description": "オープン済みのファイルディスクリプタ fd に対する新しい\nIO オブジェクトを生成して返します。",
+      "example": "p IO.open(IO.sysopen(\"testfile\")) { |io| p io.class } # => IO",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/IO/s/open.html"
     },
     {
       "method_name": "pipe",
@@ -10035,12 +10271,10 @@
       "class_name": "Integer",
       "method_kind": "instance_method",
       "signatures": [
-        "**(other) -> Numeric",
-        "pow(other) -> Numeric",
-        "pow(other, modulo) -> Integer"
+        "**(other) -> Numeric"
       ],
       "description": "self の other 乗を返します。",
-      "example": "p 2 ** 3 # => 8\np 2 ** 0 # => 1\np 0 ** 0 # => 1\np 3.pow(3,  8)  # =>  3\np 3.pow(3, -8)  # => -5\np 3.pow(2, -2)  # => -1\np -3.pow(3,  8) # =>  5\np -3.pow(3, -8) # => -3\np 5.pow(2, -8)  # => -7",
+      "example": "p 2 ** 3 # => 8\np 2 ** 0 # => 1\np 0 ** 0 # => 1",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Integer/i/=2a=2a.html"
     },
     {
@@ -10491,6 +10725,18 @@
       "description": "self を返します。",
       "example": "p 10.ord  # => 10\n# String#ord\np ?a.ord  # => 97",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Integer/i/ord.html"
+    },
+    {
+      "method_name": "pow",
+      "class_name": "Integer",
+      "method_kind": "instance_method",
+      "signatures": [
+        "pow(other) -> Numeric",
+        "pow(other, modulo) -> Integer"
+      ],
+      "description": "self の other 乗を返します。\nmodulo を指定しない場合は [m:Integer#**] と同じです。",
+      "example": "p 2.pow(3) # => 8\np 3.pow(3,  8)  # =>  3\np 3.pow(3, -8)  # => -5\np 3.pow(2, -2)  # => -1\np -3.pow(3,  8) # =>  5\np -3.pow(3, -8) # => -3\np 5.pow(2, -8)  # => -7",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Integer/i/pow.html"
     },
     {
       "method_name": "pred",
@@ -14897,12 +15143,22 @@
       "class_name": "Process",
       "method_kind": "module_function",
       "signatures": [
-        "maxgroups        -> Integer",
+        "maxgroups        -> Integer"
+      ],
+      "description": "設定できる補助グループ ID の数を返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Process/m/maxgroups.html"
+    },
+    {
+      "method_name": "maxgroups=",
+      "class_name": "Process",
+      "method_kind": "module_function",
+      "signatures": [
         "maxgroups=(num)"
       ],
       "description": "設定できる補助グループ ID の数を指定します。",
       "example": null,
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Process/m/maxgroups.html"
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Process/m/maxgroups=3d.html"
     },
     {
       "method_name": "pid",
@@ -15032,13 +15288,23 @@
       "method_kind": "module_function",
       "signatures": [
         "wait(pid = -1, flags = 0)       -> Integer | nil",
+        "waitpid(pid = -1, flags = 0)    -> Integer | nil"
+      ],
+      "description": "pid で指定される特定の子プロセスの終了を待ち、そのプロセスが終了した時に pid を返します。\nノンブロッキングモードで子プロセスがまだ終了していない時には\nnil を返します。",
+      "example": "pid = fork { sleep 1 }\np Process.wait # => 70024\np $?           # => #<Process::Status: pid 70024 exit 0>",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Process/m/wait.html"
+    },
+    {
+      "method_name": "wait2",
+      "class_name": "Process",
+      "method_kind": "module_function",
+      "signatures": [
         "wait2(pid = -1, flags = 0)      -> [Integer, Process::Status] | nil",
-        "waitpid(pid = -1, flags = 0)    -> Integer | nil",
         "waitpid2(pid = -1, flags = 0)   -> [Integer, Process::Status] | nil"
       ],
-      "description": "pid で指定される特定の子プロセスの終了を待ち、そのプロセスが終了した時に pid を返します。\nwait2, waitpid2 は子プロセスの pid と終了ステータスを表す\n[c:Process::Status] オブジェクトの配列を返します。\nノンブロッキングモードで子プロセスがまだ終了していない時には\nnil を返します。",
+      "description": "pid で指定される特定の子プロセスの終了を待ち、そのプロセスが終了した時に\n子プロセスの pid と終了ステータスを表す [c:Process::Status] オブジェクトの配列を返します。\nノンブロッキングモードで子プロセスがまだ終了していない時には\nnil を返します。",
       "example": "pid = fork { sleep 1 }\np Process.wait2 # => [70024, #<Process::Status: pid 70024 exit 0>]",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Process/m/wait.html"
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Process/m/wait2.html"
     },
     {
       "method_name": "waitall",
@@ -16243,18 +16509,28 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Random=3a=3aFormatter/i/alphanumeric.html"
     },
     {
+      "method_name": "random_number",
+      "class_name": "Random::Formatter",
+      "method_kind": "instance_method",
+      "signatures": [
+        "random_number -> Float",
+        "random_number(max) -> Integer | Float",
+        "random_number(range) -> Integer | Float"
+      ],
+      "description": "生の乱数から整形した乱数を生成して返します。[m:Random#rand] とほぼ同じ働きをします。",
+      "example": "prng = Random.new\np prng.random_number       # => 0.3881631795458004\np prng.random_number(100)  # => 54\np prng.random_number(1..6) # => 3",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Random=3a=3aFormatter/i/random_number.html"
+    },
+    {
       "method_name": "%",
       "class_name": "Range",
       "method_kind": "instance_method",
       "signatures": [
-        "step(s = 1) {|item| ... } -> self",
-        "step(s = 1) -> Enumerator",
-        "step(s = 1) -> Enumerator::ArithmeticSequence",
         "%(s)        -> Enumerator",
         "%(s)        -> Enumerator::ArithmeticSequence"
       ],
-      "description": "範囲内の要素を s おきに繰り返します。",
-      "example": "(1..10).step(3) {|v| p v}\n# => 1\n#    4\n#    7\n#    10\n\n(\"a\"..\"f\").step(2) {|v| p v}\n# => \"a\"\n#    \"c\"\n#    \"e\"\n\n(10..0).step(-3) {|v| p v}\n# => 10\n#     7\n#     4\n#     1",
+      "description": "範囲内の要素を s おきに繰り返す [c:Enumerator] を返します。\nブロックを指定しない [m:Range#step] と同じです。",
+      "example": "p ((1..10) % 3).to_a     # => [1, 4, 7, 10]\np ((\"a\"..\"f\") % 2).to_a  # => [\"a\", \"c\", \"e\"]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/=25.html"
     },
     {
@@ -16284,11 +16560,10 @@
       "class_name": "Range",
       "method_kind": "instance_method",
       "signatures": [
-        "begin -> object",
-        "first -> object"
+        "begin -> object"
       ],
-      "description": "始端の要素を返します。\n始端を持たない範囲オブジェクトの場合、begin はnilを返しますが, first は例外 [c:RangeError] が発生します。",
-      "example": "# 始端を持つ場合\np (1..5).begin # => 1\np (1..0).begin # => 1\np (1..5).first # => 1\np (1..0).first # => 1\n\n# 始端を持たない場合\np (..5).begin # => nil\n(..5).first   # ~> RangeError",
+      "description": "始端の要素を返します。\n始端を持たない範囲オブジェクトの場合、nil を返します。",
+      "example": "# 始端を持つ場合\np (1..5).begin # => 1\np (1..0).begin # => 1\n\n# 始端を持たない場合\np (..5).begin # => nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/begin.html"
     },
     {
@@ -16331,11 +16606,10 @@
       "class_name": "Range",
       "method_kind": "instance_method",
       "signatures": [
-        "end -> object",
-        "last -> object"
+        "end -> object"
       ],
       "description": "終端の要素を返します。範囲オブジェクトが終端を含むかどうかは関係ありません。",
-      "example": "p (10..20).last    # => 20\np (10...20).last   # => 20",
+      "example": "p (10..20).end    # => 20\np (10...20).end   # => 20",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/end.html"
     },
     {
@@ -16373,6 +16647,17 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/exclude_end=3f.html"
     },
     {
+      "method_name": "first",
+      "class_name": "Range",
+      "method_kind": "instance_method",
+      "signatures": [
+        "first -> object"
+      ],
+      "description": "始端の要素を返します。\n始端を持たない範囲オブジェクトの場合、例外 [c:RangeError] が発生します。",
+      "example": "# 始端を持つ場合\np (1..5).first # => 1\np (1..0).first # => 1\n\n# 始端を持たない場合\n(..5).first   # ~> RangeError",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/first.html"
+    },
+    {
       "method_name": "hash",
       "class_name": "Range",
       "method_kind": "instance_method",
@@ -16405,6 +16690,17 @@
       "description": "self を文字列に変換します(始端と終端のオブジェクトは #inspect メソッドで文字列に変換されます)。",
       "example": "p (1..5).inspect    # => \"1..5\"\np (\"1\"..\"5\").inspect  # => \"\\\"1\\\"..\\\"5\\\"\"",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/inspect.html"
+    },
+    {
+      "method_name": "last",
+      "class_name": "Range",
+      "method_kind": "instance_method",
+      "signatures": [
+        "last -> object"
+      ],
+      "description": "終端の要素を返します。範囲オブジェクトが終端を含むかどうかは関係ありません。",
+      "example": "p (10..20).last    # => 20\np (10...20).last   # => 20",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/last.html"
     },
     {
       "method_name": "max",
@@ -16475,6 +16771,19 @@
       "description": "範囲内の要素数を返します。",
       "example": "p (10..20).size  # => 11\np (\"a\"..\"z\").size  # => nil\np (1..).size     # => Infinity\n(-Float::INFINITY..Float::INFINITY).size # => can't iterate from Float (TypeError)",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/size.html"
+    },
+    {
+      "method_name": "step",
+      "class_name": "Range",
+      "method_kind": "instance_method",
+      "signatures": [
+        "step(s = 1) {|item| ... } -> self",
+        "step(s = 1) -> Enumerator",
+        "step(s = 1) -> Enumerator::ArithmeticSequence"
+      ],
+      "description": "範囲内の要素を s おきに繰り返します。",
+      "example": "(1..10).step(3) {|v| p v}\n# => 1\n#    4\n#    7\n#    10\n\n(\"a\"..\"f\").step(2) {|v| p v}\n# => \"a\"\n#    \"c\"\n#    \"e\"\n\n(10..0).step(-3) {|v| p v}\n# => 10\n#     7\n#     4\n#     1",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Range/i/step.html"
     },
     {
       "method_name": "to_s",
@@ -16747,8 +17056,7 @@
       "class_name": "Rational",
       "method_kind": "instance_method",
       "signatures": [
-        "to_i -> Integer",
-        "truncate(precision = 0) -> Rational | Integer"
+        "to_i -> Integer"
       ],
       "description": "小数点以下を切り捨てて値を整数に変換して返します。",
       "example": "p Rational(2, 3).to_i # => 0\np Rational(3).to_i    # => 3\np Rational(300.6).to_i  # => 300\np Rational(98, 71).to_i # => 1\np Rational(-31, 2).to_i # => -15",
@@ -16775,6 +17083,17 @@
       "description": "self を人間が読みやすい形の文字列表現にして返します。",
       "example": "p Rational(3, 4).to_s  # => \"3/4\"\np Rational(8).to_s   # => \"8/1\"\np Rational(-8, 6).to_s # => \"-4/3\"\np Rational(0.5).to_s # => \"1/2\"",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Rational/i/to_s.html"
+    },
+    {
+      "method_name": "truncate",
+      "class_name": "Rational",
+      "method_kind": "instance_method",
+      "signatures": [
+        "truncate(precision = 0) -> Rational | Integer"
+      ],
+      "description": "小数点以下を切り捨てて値を整数に変換して返します。",
+      "example": "p Rational('-123.456').truncate(+1)     # => (-617/5)\np Rational('-123.456').truncate(+1).to_f  # => -123.4\np Rational('-123.456').truncate(0)      # => -123\np Rational('-123.456').truncate(-1)     # => -120",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Rational/i/truncate.html"
     },
     {
       "method_name": "target",
@@ -17167,6 +17486,18 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Ruby=3a=3aBox/s/new.html"
     },
     {
+      "method_name": "keep_script_lines",
+      "class_name": "RubyVM",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM.keep_script_lines -> bool",
+        "RubyVM.keep_script_lines=(bool)"
+      ],
+      "description": "読み込んだスクリプトのソースコードの行を記録するかどうかを取得、設定します。",
+      "example": "p RubyVM.keep_script_lines # => false\nRubyVM.keep_script_lines = true\np RubyVM.keep_script_lines # => true\nRubyVM.keep_script_lines = false",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM/s/keep_script_lines.html"
+    },
+    {
       "method_name": "stat",
       "class_name": "RubyVM",
       "method_kind": "class_method",
@@ -17448,6 +17779,17 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/i/disasm.html"
     },
     {
+      "method_name": "each_child",
+      "class_name": "RubyVM::InstructionSequence",
+      "method_kind": "instance_method",
+      "signatures": [
+        "each_child {|child_iseq| ... } -> self"
+      ],
+      "description": "self が直接含む(ネストした)命令シーケンスを、それぞれ引数としてブロックに渡して繰り返します。",
+      "example": "def foo\n  bar = -> { 1 }\n  bar.call\nend\n\niseq = RubyVM::InstructionSequence.of(method(:foo))\nchildren = []\niseq.each_child {|child| children << child.label }\np children # => [\"block in foo\"]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/i/each_child.html"
+    },
+    {
       "method_name": "eval",
       "class_name": "RubyVM::InstructionSequence",
       "method_kind": "instance_method",
@@ -17503,6 +17845,17 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/i/path.html"
     },
     {
+      "method_name": "script_lines",
+      "class_name": "RubyVM::InstructionSequence",
+      "method_kind": "instance_method",
+      "signatures": [
+        "script_lines -> [String] | nil"
+      ],
+      "description": "self が表す命令シーケンスに対応するソースコードの行を配列で返します。記録されていない場合は nil を返します。",
+      "example": "RubyVM.keep_script_lines = true\niseq = RubyVM::InstructionSequence.compile(\"num = 1 + 2\\nputs num\")\np iseq.script_lines # => [\"num = 1 + 2\\n\", \"puts num\"]\nRubyVM.keep_script_lines = false",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/i/script_lines.html"
+    },
+    {
       "method_name": "to_a",
       "class_name": "RubyVM::InstructionSequence",
       "method_kind": "instance_method",
@@ -17523,6 +17876,17 @@
       "description": "バイナリフォーマットでシリアライズされたiseqのデータを文字列として返します。\n[m:RubyVM::InstructionSequence.load_from_binary] メソッドでバイナリデータに対応するiseqオブジェクトを作れます。",
       "example": "iseq = RubyVM::InstructionSequence.compile('num = 1 + 2')\niseq.to_binary(\"extra_data\")\n\n# ※表示の都合上改行しているが実際は改行はない\n# => \"YARB\\x02\\x00\\x00\\x00\\x03\\x00\\x00\\x00\\x16\\x02\\x00\\x00\\n\\x00\\x00\\x00\\x01\n# \\x00\\x00\\x00\\x03\\x00\\x00\\x00\\x05\\x00\\x00\\x00\\x84\\x01\\x00\\x00\\x88\\x01\\x00\n# \\x00\\x02\\x02\\x00\\x00x86_64-darwin15\\x00*\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x01\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\\\\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x0F\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x02\\x00\\x00\\x00\\x00\\x00\\x00\\x00=\\x00\\x00\\x00\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x1F\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00Y\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x003\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x01\\x00\\x00\n# \\x00\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x10\n# \\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\f\\x00\\x00\\x00<\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x01\\x00\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x01\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\x00\\x00\\x00\\x00\n# \\x00\\x00\\x9C\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xA4\\x00\\x00\\x00\\x00\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xFF\\xFF\\xFF\\xFF\\xFF\\xFF\\xFF\\xFF\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xAC\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\n# \\x00\\x00\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\n# \\x01\\x00\\x00\\x00\\x02\\x00\\x00\\x00\\xBC\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\n# \\x00\\x00\\x03\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x04\\x00\\x00\\x00\\x00\\x00\\x00\\x00\n# \\xF1\\x7F\\x00\\x00\\b\\x00\\x00\\x00\\x00\\x00\\x00\\x00E\\x7F\\x00\\x00\\x02\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x00\\n\\x00\\x00\\x00\\x00\\x00\\x00\\x00<compiled>\\xF5\\x7F\\x00\\x00\n# \\x05\\x00\\x00\\x00\\x00\\x00\\x00\\x00E\\x7F\\x00\\x00\\x02\\x00\\x00\\x00\\x00\\x00\\x00\n# \\x00\\x03\\x00\\x00\\x00\\x00\\x00\\x00\\x00numE\\x7F\\x00\\x00\\x02\\x00\\x00\\x00\\x00\n# \\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00+\\xA0\\x01\\x00\\x00\\xAC\\x01\\x00\n# \\x00\\xCA\\x01\\x00\\x00\\xD6\\x01\\x00\\x00\\xED\\x01\\x00\\x00extra_data\"",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/i/to_binary.html"
+    },
+    {
+      "method_name": "trace_points",
+      "class_name": "RubyVM::InstructionSequence",
+      "method_kind": "instance_method",
+      "signatures": [
+        "trace_points -> [[Integer, Symbol]]"
+      ],
+      "description": "self が表す命令シーケンス内のトレースポイント(イベントが発生しうる位置)の一覧を返します。",
+      "example": "iseq = RubyVM::InstructionSequence.compile(<<~RUBY)\n  def hello\n    puts \"hi\"\n  end\nRUBY\np iseq.trace_points # => [[1, :line]]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/i/trace_points.html"
     },
     {
       "method_name": "compile",
@@ -17548,6 +17912,17 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/s/compile_file.html"
     },
     {
+      "method_name": "compile_file_prism",
+      "class_name": "RubyVM::InstructionSequence",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::InstructionSequence.compile_file_prism(file, options = nil) -> RubyVM::InstructionSequence"
+      ],
+      "description": "引数 file で指定した Ruby のソースコードを構文解析器 Prism でパースしてコンパイルし、\n[c:RubyVM::InstructionSequence] オブジェクトを作成して返します。",
+      "example": "# /tmp/hello.rb\nputs \"Hello, world!\"\n\niseq = RubyVM::InstructionSequence.compile_file_prism(\"/tmp/hello.rb\")\niseq.eval\n# => Hello, world!",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/s/compile_file_prism.html"
+    },
+    {
       "method_name": "compile_option",
       "class_name": "RubyVM::InstructionSequence",
       "method_kind": "class_method",
@@ -17568,6 +17943,28 @@
       "description": "命令シーケンスのコンパイル時のデフォルトの最適化オプションを引数\noptions で指定します。",
       "example": null,
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/s/compile_option=3d.html"
+    },
+    {
+      "method_name": "compile_parsey",
+      "class_name": "RubyVM::InstructionSequence",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::InstructionSequence.compile_parsey(source, file = nil, path = nil, line = 1, options = nil) -> RubyVM::InstructionSequence"
+      ],
+      "description": "引数 source で指定した Ruby のソースコードを、旧来のパーサ(parse.y)でパースしてコンパイルし、\n[c:RubyVM::InstructionSequence] オブジェクトを作成して返します。",
+      "example": "iseq = RubyVM::InstructionSequence.compile_parsey(\"a = 1 + 2\")\np iseq.eval # => 3",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/s/compile_parsey.html"
+    },
+    {
+      "method_name": "compile_prism",
+      "class_name": "RubyVM::InstructionSequence",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::InstructionSequence.compile_prism(source, file = nil, path = nil, line = 1, options = nil) -> RubyVM::InstructionSequence"
+      ],
+      "description": "引数 source で指定した Ruby のソースコードを構文解析器 Prism でパースしてコンパイルし、\n[c:RubyVM::InstructionSequence] オブジェクトを作成して返します。",
+      "example": "iseq = RubyVM::InstructionSequence.compile_prism(\"a = 1 + 2\")\np iseq.eval # => 3",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aInstructionSequence/s/compile_prism.html"
     },
     {
       "method_name": "disasm",
@@ -17725,6 +18122,105 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aYJIT/s/stats_string.html"
     },
     {
+      "method_name": "dump_exit_locations",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.dump_exit_locations(filename) -> Integer"
+      ],
+      "description": "--zjit-trace-exits を指定して収集した、サイドイグジットが発生した位置の情報を\nMarshal 形式で filename にダンプします。ダンプしたファイルは Stackprof で読み込んで解析できます。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/dump_exit_locations.html"
+    },
+    {
+      "method_name": "enable",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.enable -> bool"
+      ],
+      "description": "実行時に ZJIT を有効化します。",
+      "example": "RubyVM::ZJIT.enable # => true",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/enable.html"
+    },
+    {
+      "method_name": "enabled?",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.enabled? -> bool"
+      ],
+      "description": "ZJIT が有効かどうかを返します。",
+      "example": "RubyVM::ZJIT.enabled? # => false",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/enabled=3f.html"
+    },
+    {
+      "method_name": "exit_locations",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.exit_locations -> Hash | nil"
+      ],
+      "description": "--zjit-trace-exits を指定して収集した、サイドイグジットが発生した位置の情報を\nStackprof で読める形式のハッシュにして返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/exit_locations.html"
+    },
+    {
+      "method_name": "reset_stats!",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.reset_stats! -> nil"
+      ],
+      "description": "--zjit-stats で収集した統計情報を破棄します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/reset_stats=21.html"
+    },
+    {
+      "method_name": "stats",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.stats(target_key = nil) -> Hash | object | nil"
+      ],
+      "description": "ZJIT の統計情報を返します。",
+      "example": "# ruby --zjit-stats で実行した場合\nRubyVM::ZJIT.stats.keys.first(3)  # => [:compiled_iseq_count, :failed_iseq_count, :compile_time_ns]\nRubyVM::ZJIT.stats(:compiled_iseq_count) # => 12",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/stats.html"
+    },
+    {
+      "method_name": "stats_enabled?",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.stats_enabled? -> bool"
+      ],
+      "description": "統計収集(--zjit-stats)が有効かどうかを返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/stats_enabled=3f.html"
+    },
+    {
+      "method_name": "stats_string",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.stats_string -> String | nil"
+      ],
+      "description": "ZJIT の統計情報の要約を、--zjit-stats で終了時に表示されるのと同じ形式の文字列で返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/stats_string.html"
+    },
+    {
+      "method_name": "trace_exit_locations_enabled?",
+      "class_name": "RubyVM::ZJIT",
+      "method_kind": "class_method",
+      "signatures": [
+        "RubyVM::ZJIT.trace_exit_locations_enabled? -> bool"
+      ],
+      "description": "サイドイグジット(exit)の発生位置の収集(--zjit-trace-exits)が有効かどうかを返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM=3a=3aZJIT/s/trace_exit_locations_enabled=3f.html"
+    },
+    {
       "method_name": "&",
       "class_name": "Set",
       "method_kind": "instance_method",
@@ -17781,11 +18277,10 @@
       "method_kind": "instance_method",
       "signatures": [
         "add(o) -> self",
-        "<<(o) -> self",
-        "add?(o) -> self | nil"
+        "<<(o) -> self"
       ],
       "description": "集合にオブジェクト o を加えます。",
-      "example": "s = Set[1, 2]\ns << 10\np s           # => Set[1, 2, 10]\np s.add?(20)  # => Set[1, 2, 10, 20]\np s.add?(2)   # => nil",
+      "example": "s = Set[1, 2]\ns << 10\np s           # => Set[1, 2, 10]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/=3c=3c.html"
     },
     {
@@ -17836,6 +18331,17 @@
       "description": "対称差、すなわち、2 つの集合のいずれか一方にだけ属するすべての要素からなる新しい集合を作ります。",
       "example": "s1 = Set[10, 20, 30]\ns2 = Set[10, 30, 50]\np s1 ^ s2 # => Set[20, 50]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/=5e.html"
+    },
+    {
+      "method_name": "add?",
+      "class_name": "Set",
+      "method_kind": "instance_method",
+      "signatures": [
+        "add?(o) -> self | nil"
+      ],
+      "description": "集合にオブジェクト o を加えます。",
+      "example": "s = Set[1, 2, 10]\np s.add?(20)  # => Set[1, 2, 10, 20]\np s.add?(2)   # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/add=3f.html"
     },
     {
       "method_name": "classify",
@@ -17910,23 +18416,32 @@
       "class_name": "Set",
       "method_kind": "instance_method",
       "signatures": [
-        "delete(o) -> self",
+        "delete(o) -> self"
+      ],
+      "description": "集合からオブジェクト o を削除します。",
+      "example": "s = Set[10, 20, 30]\ns.delete(10)\np s              # => Set[20, 30]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/delete.html"
+    },
+    {
+      "method_name": "delete?",
+      "class_name": "Set",
+      "method_kind": "instance_method",
+      "signatures": [
         "delete?(o) -> self | nil"
       ],
       "description": "集合からオブジェクト o を削除します。",
-      "example": "s = Set[10, 20, 30]\ns.delete(10)\np s              # => Set[20, 30]\np s.delete?(20)  # => Set[30]\np s.delete?(10)  # => nil",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/delete.html"
+      "example": "s = Set[20, 30]\np s.delete?(20)  # => Set[30]\np s.delete?(10)  # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/delete=3f.html"
     },
     {
       "method_name": "delete_if",
       "class_name": "Set",
       "method_kind": "instance_method",
       "signatures": [
-        "delete_if {|o| ... } -> self",
-        "reject! {|o| ... } -> self | nil"
+        "delete_if {|o| ... } -> self"
       ],
       "description": "集合の各要素に対してブロックを実行し、その結果が真であるようなすべての要素を削除します。",
-      "example": "s1 = Set['hello.rb', 'test.rb', 'hello.rb.bak']\ns1.delete_if {|str| str =~ /\\.bak\\z/}\np s1 # => Set[\"hello.rb\", \"test.rb\"]\n\ns2 = Set['hello.rb', 'test.rb', 'hello.rb.bak']\np s2.reject! {|str| str =~ /\\.bak\\z/} # => Set[\"hello.rb\", \"test.rb\"]\np s2.reject! {|str| str =~ /\\.o\\z/}   # => nil",
+      "example": "s1 = Set['hello.rb', 'test.rb', 'hello.rb.bak']\ns1.delete_if {|str| str =~ /\\.bak\\z/}\np s1 # => Set[\"hello.rb\", \"test.rb\"]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/delete_if.html"
     },
     {
@@ -17991,12 +18506,22 @@
       "class_name": "Set",
       "method_kind": "instance_method",
       "signatures": [
-        "flatten -> Set",
+        "flatten -> Set"
+      ],
+      "description": "集合を再帰的に平坦化した集合を新しく作成し、それを返します。",
+      "example": "s = Set[Set[1,2], 3]\np s.flatten # => Set[1, 2, 3]\np s         # => Set[Set[1, 2], 3]",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/flatten.html"
+    },
+    {
+      "method_name": "flatten!",
+      "class_name": "Set",
+      "method_kind": "instance_method",
+      "signatures": [
         "flatten! -> self | nil"
       ],
-      "description": "集合を再帰的に平坦化します。",
-      "example": "s = Set[Set[1,2], 3]\np s.flatten # => Set[1, 2, 3]\np s         # => Set[Set[1, 2], 3]\ns.flatten!\np s         # => Set[1, 2, 3]",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/flatten.html"
+      "description": "集合を再帰的かつ破壊的に平坦化します。集合の要素に変更が発生した場合には self を、そうでない場合には nil を返します。",
+      "example": "s = Set[Set[1,2], 3]\ns.flatten!\np s           # => Set[1, 2, 3]\np s.flatten!  # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/flatten=21.html"
     },
     {
       "method_name": "inspect",
@@ -18065,6 +18590,17 @@
       "description": "元の集合に enum で与えられた要素を追加します。",
       "example": "set = Set[10, 20]\nset.merge([10, 30])\np set # => Set[10, 20, 30]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/merge.html"
+    },
+    {
+      "method_name": "reject!",
+      "class_name": "Set",
+      "method_kind": "instance_method",
+      "signatures": [
+        "reject! {|o| ... } -> self | nil"
+      ],
+      "description": "集合の各要素に対してブロックを実行し、その結果が真であるようなすべての要素を削除します。",
+      "example": "s2 = Set['hello.rb', 'test.rb', 'hello.rb.bak']\np s2.reject! {|str| str =~ /\\.bak\\z/} # => Set[\"hello.rb\", \"test.rb\"]\np s2.reject! {|str| str =~ /\\.o\\z/}   # => nil",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/reject=21.html"
     },
     {
       "method_name": "replace",
@@ -18274,11 +18810,10 @@
       "class_name": "String",
       "method_kind": "instance_method",
       "signatures": [
-        "<<(other) -> self",
-        "concat(other) -> self"
+        "<<(other) -> self"
       ],
       "description": "self に文字列 other を破壊的に連結します。\nother が 整数である場合は other.chr(self.encoding) 相当の文字を末尾に追加します。",
-      "example": "str = \"string\"\nstr.concat \"XXX\"\np str    # => \"stringXXX\"\n\nstr << \"YYY\"\np str    # => \"stringXXXYYY\"\n\nstr << 65  # 文字AのASCIIコード\np str    # => \"stringXXXYYYA\"",
+      "example": "str = \"string\"\nstr << \"YYY\"\np str    # => \"stringYYY\"\n\nstr << 65  # 文字AのASCIIコード\np str    # => \"stringYYYA\"",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/=3c=3c.html"
     },
     {
@@ -18585,6 +19120,18 @@
       "description": "文字列の各コードポイントの配列を返します。(self.each_codepoint.to_a と同じです)",
       "example": "p \"hello わーるど\".codepoints\n# => [104, 101, 108, 108, 111, 32, 12431, 12540, 12427, 12393]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/codepoints.html"
+    },
+    {
+      "method_name": "concat",
+      "class_name": "String",
+      "method_kind": "instance_method",
+      "signatures": [
+        "concat(other) -> self",
+        "concat(*arguments) -> self"
+      ],
+      "description": "self に複数の文字列を破壊的に連結します。",
+      "example": "str = \"foo\"\nstr.concat\np str    # => \"foo\"\n\nstr = \"foo\"\nstr.concat \"bar\", \"baz\"\np str    # => \"foobarbaz\"\n\nstr = \"foo\"\nstr.concat(\"!\", 33, 33)\np str    # => \"foo!!!\"",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/concat.html"
     },
     {
       "method_name": "count",
@@ -20240,12 +20787,22 @@
       "class_name": "Thread",
       "method_kind": "instance_method",
       "signatures": [
-        "abort_on_exception               -> bool",
+        "abort_on_exception               -> bool"
+      ],
+      "description": "そのスレッドが例外によって終了した時に、その例外をメインスレッドで再度発生させるかどうかを返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/abort_on_exception.html"
+    },
+    {
+      "method_name": "abort_on_exception=",
+      "class_name": "Thread",
+      "method_kind": "instance_method",
+      "signatures": [
         "abort_on_exception=(newstate)"
       ],
       "description": "真の場合、そのスレッドが例外によって終了した時に、その例外をメインスレッドで再度発生させます。メインスレッドがその例外を捕捉しない限り、結果としてインタプリタ全体が終了します。false の場合、あるスレッドで起こった例外は、\n[m:Thread#join] などで検出されない限りそのスレッドだけをなにも警告を出さずに終了させます。",
       "example": "thread = Thread.new { sleep 1 }\np thread.abort_on_exception # => false\nthread.abort_on_exception = true\np thread.abort_on_exception # => true",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/abort_on_exception.html"
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/abort_on_exception=3d.html"
     },
     {
       "method_name": "add_trace_func",
@@ -20422,12 +20979,22 @@
       "class_name": "Thread",
       "method_kind": "instance_method",
       "signatures": [
-        "priority    -> Integer",
-        "priority=(val)"
+        "priority    -> Integer"
       ],
       "description": "スレッドの優先度を返します。この値が大きいほど優先度が高くなります。\nメインスレッドのデフォルト値は 0 です。新しく生成されたスレッドは親スレッドの\npriority を引き継ぎます。",
-      "example": "p Thread.current.priority # => 0\n\ncount1 = count2 = 0\na = Thread.new do\n      loop { count1 += 1 }\n    end\na.priority = -1\n\nb = Thread.new do\n      loop { count2 += 1 }\n    end\nb.priority = -2\ncount1 = count2 = 0 # reset\np sleep 1 # => 1\np count1  # => 13809431\np count2  # => 11571921",
+      "example": "p Thread.current.priority # => 0",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/priority.html"
+    },
+    {
+      "method_name": "priority=",
+      "class_name": "Thread",
+      "method_kind": "instance_method",
+      "signatures": [
+        "priority=(val)"
+      ],
+      "description": "スレッドの優先度を設定します。この値が大きいほど優先度が高くなります。",
+      "example": "p Thread.current.priority # => 0\n\ncount1 = count2 = 0\na = Thread.new do\n      loop { count1 += 1 }\n    end\na.priority = -1\n\nb = Thread.new do\n      loop { count2 += 1 }\n    end\nb.priority = -2\ncount1 = count2 = 0 # reset\np sleep 1 # => 1\np count1  # => 13809431\np count2  # => 11571921",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/priority=3d.html"
     },
     {
       "method_name": "raise",
@@ -20445,12 +21012,22 @@
       "class_name": "Thread",
       "method_kind": "instance_method",
       "signatures": [
-        "report_on_exception               -> bool",
+        "report_on_exception               -> bool"
+      ],
+      "description": "そのスレッドが例外によって終了した時に、その内容を $stderr に報告するかどうかを返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/report_on_exception.html"
+    },
+    {
+      "method_name": "report_on_exception=",
+      "class_name": "Thread",
+      "method_kind": "instance_method",
+      "signatures": [
         "report_on_exception=(newstate)"
       ],
       "description": "真の場合、そのスレッドが例外によって終了した時に、その内容を $stderr に報告します。",
       "example": "a = Thread.new{ Thread.stop; raise }\na.report_on_exception = true\np a.report_on_exception # => true\na.run\n# => #<Thread:0x00007fc3f48c7908 (irb):1 run> terminated with exception (report_on_exception is true):\n#    Traceback (most recent call last):\n#    (irb):1:in 'block in irb_binding': unhandled exception\n#    #<Thread:0x00007fc3f48c7908 (irb):1 dead>\nb = Thread.new{ Thread.stop; raise }\nb.report_on_exception = false\np b.run # => #<Thread:0x00007fc3f48aefc0 (irb):4 dead>",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/report_on_exception.html"
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/report_on_exception=3d.html"
     },
     {
       "method_name": "run",
@@ -20589,12 +21166,22 @@
       "class_name": "Thread",
       "method_kind": "class_method",
       "signatures": [
-        "Thread.abort_on_exception             -> bool",
+        "Thread.abort_on_exception             -> bool"
+      ],
+      "description": "いずれかのスレッドが例外によって終了した時に、その例外をメインスレッドで再度発生させるかどうかを返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/s/abort_on_exception.html"
+    },
+    {
+      "method_name": "abort_on_exception=",
+      "class_name": "Thread",
+      "method_kind": "class_method",
+      "signatures": [
         "Thread.abort_on_exception=(newstate)"
       ],
       "description": "真の時は、いずれかのスレッドが例外によって終了した時に、その例外をメインスレッドで再度発生させます。メインスレッドがその例外を捕捉しない限り、結果としてインタプリタ全体が終了します。false の場合、あるスレッドで起こった例外は、[m:Thread#join]\nなどで検出されない限りそのスレッドだけをなにも警告を出さずに終了させます。",
       "example": "p Thread.abort_on_exception # => false\nThread.abort_on_exception = true\np Thread.abort_on_exception # => true",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/s/abort_on_exception.html"
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/s/abort_on_exception=3d.html"
     },
     {
       "method_name": "current",
@@ -20746,12 +21333,22 @@
       "class_name": "Thread",
       "method_kind": "class_method",
       "signatures": [
-        "Thread.report_on_exception             -> bool",
+        "Thread.report_on_exception             -> bool"
+      ],
+      "description": "いずれかのスレッドが例外によって終了した時に、その内容を $stderr に報告するかどうかを返します。",
+      "example": null,
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/s/report_on_exception.html"
+    },
+    {
+      "method_name": "report_on_exception=",
+      "class_name": "Thread",
+      "method_kind": "class_method",
+      "signatures": [
         "Thread.report_on_exception=(newstate)"
       ],
       "description": "真の時は、いずれかのスレッドが例外によって終了した時に、その内容を $stderr に報告します。",
       "example": "Thread.new { 1.times { raise } }",
-      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/s/report_on_exception.html"
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/s/report_on_exception=3d.html"
     },
     {
       "method_name": "stop",
@@ -21765,12 +22362,23 @@
       "class_name": "Time",
       "method_kind": "class_method",
       "signatures": [
-        "Time.new    -> Time",
-        "Time.now    -> Time"
+        "Time.new    -> Time"
       ],
-      "description": "現在時刻の Time オブジェクトを生成して返します。\nタイムゾーンは地方時となります。",
-      "example": "p Time.now # => 2009-06-24 12:39:54 +0900",
+      "description": "現在時刻の Time オブジェクトを生成して返します。\nタイムゾーンは地方時となります。\n[m:Time.now] と同じです。",
+      "example": "p Time.new # => 2009-06-24 12:39:54 +0900",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Time/s/new.html"
+    },
+    {
+      "method_name": "now",
+      "class_name": "Time",
+      "method_kind": "class_method",
+      "signatures": [
+        "Time.now    -> Time",
+        "Time.now(in: nil)    -> Time"
+      ],
+      "description": "現在時刻の Time オブジェクトを生成して返します。\n引数を指定しない [m:Time.new] と同じです。",
+      "example": "p Time.now               # => 2009-06-24 12:39:54 +0900\np Time.now(in: \"+04:00\") # => 2009-06-24 07:39:54 +0400\np Time.now(in: \"UTC\")    # => 2009-06-24 03:39:54 UTC",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Time/s/now.html"
     },
     {
       "method_name": "binding",
@@ -22334,7 +22942,7 @@
       "class_name": "main",
       "method_kind": "class_method",
       "signatures": [
-        "main.private() -> nil",
+        "main.private -> nil",
         "main.private(name) -> String | Symbol",
         "main.private(*name) -> Array",
         "main.private(names) -> Array"
@@ -22348,7 +22956,7 @@
       "class_name": "main",
       "method_kind": "class_method",
       "signatures": [
-        "main.public() -> nil",
+        "main.public -> nil",
         "main.public(name) -> String | Symbol",
         "main.public(*name) -> Array",
         "main.public(names) -> Array"
