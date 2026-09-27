@@ -1606,7 +1606,7 @@
         "to_h { block } -> Hash"
       ],
       "description": "self を [key, value] のペアの配列として解析した結果を [c:Hash] にして返します。",
-      "example": "p [[:foo, :bar], [1, 2]].to_h # => {:foo => :bar, 1 => 2}",
+      "example": "p [[:foo, :bar], [1, 2]].to_h # => {foo: :bar, 1 => 2}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Array/i/to_h.html"
     },
     {
@@ -2480,7 +2480,7 @@
         "deconstruct_keys(array_of_names_or_nil) -> Hash"
       ],
       "description": "self のメンバの名前と値の組を Hash で返します。",
-      "example": "Measure = Data.define(:amount, :unit)\n\ndistance = Measure.new(10, 'km')\np distance.deconstruct_keys(nil)     # => {:amount=>10, :unit=>\"km\"}\np distance.deconstruct_keys([:amount]) # => {:amount=>10}",
+      "example": "Measure = Data.define(:amount, :unit)\n\ndistance = Measure.new(10, 'km')\np distance.deconstruct_keys(nil)     # => {amount: 10, unit: \"km\"}\np distance.deconstruct_keys([:amount]) # => {amount: 10}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Data/i/deconstruct_keys.html"
     },
     {
@@ -2537,7 +2537,7 @@
         "to_h {|member, value| block } -> Hash"
       ],
       "description": "self のメンバ名([c:Symbol])と値の組を [c:Hash] にして返します。",
-      "example": "Customer = Data.define(:name, :address, :zip)\np Customer.new(\"Joe Smith\", \"123 Maple, Anytown NC\", 12345).to_h\n# => {:name=>\"Joe Smith\", :address=>\"123 Maple, Anytown NC\", :zip=>12345}",
+      "example": "Customer = Data.define(:name, :address, :zip)\np Customer.new(\"Joe Smith\", \"123 Maple, Anytown NC\", 12345).to_h\n# => {name: \"Joe Smith\", address: \"123 Maple, Anytown NC\", zip: 12345}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Data/i/to_h.html"
     },
     {
@@ -3105,7 +3105,7 @@
         "ENV.except(*keys) -> Hash"
       ],
       "description": "引数で指定された以外のキーとその値だけを含む Hash を返します。",
-      "example": "p ENV                     # => {\"LANG\"=>\"en_US.UTF-8\", \"TERM\"=>\"xterm-256color\", \"HOME\"=>\"/Users/rhc\"}\np ENV.except(\"TERM\",\"HOME\") # => {\"LANG\"=>\"en_US.UTF-8\"}",
+      "example": "p ENV                     # => {\"LANG\" => \"en_US.UTF-8\", \"TERM\" => \"xterm-256color\", \"HOME\" => \"/Users/rhc\"}\np ENV.except(\"TERM\",\"HOME\") # => {\"LANG\" => \"en_US.UTF-8\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/ENV/s/except.html"
     },
     {
@@ -3322,7 +3322,7 @@
         "ENV.slice(*keys) -> Hash"
       ],
       "description": "引数で指定されたキーとその値だけを含む Hash を返します。",
-      "example": "ENV[\"foo\"] = \"bar\"\nENV[\"baz\"] = \"qux\"\nENV[\"bar\"] = \"rab\"\np ENV.slice()           # => {}\np ENV.slice(\"\")         # => {}\np ENV.slice(\"unknown\")  # => {}\np ENV.slice(\"foo\", \"baz\") # => {\"foo\"=>\"bar\", \"baz\"=>\"qux\"}",
+      "example": "ENV[\"foo\"] = \"bar\"\nENV[\"baz\"] = \"qux\"\nENV[\"bar\"] = \"rab\"\np ENV.slice()           # => {}\np ENV.slice(\"\")         # => {}\np ENV.slice(\"unknown\")  # => {}\np ENV.slice(\"foo\", \"baz\") # => {\"foo\" => \"bar\", \"baz\" => \"qux\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/ENV/s/slice.html"
     },
     {
@@ -3456,7 +3456,7 @@
         "Encoding.aliases    -> Hash"
       ],
       "description": "エンコーディングの別名に対して元の名前を対応づけるハッシュを返します。",
-      "example": "p Encoding.aliases\n# => {\"BINARY\"=>\"ASCII-8BIT\", \"ASCII\"=>\"US-ASCII\", \"ANSI_X3.4-1968\"=>\"US-ASCII\",\n#   \"SJIS\"=>\"Windows-31J\", \"eucJP\"=>\"EUC-JP\", \"CP932\"=>\"Windows-31J\"}",
+      "example": "p Encoding.aliases\n# => {\"BINARY\" => \"ASCII-8BIT\", \"ASCII\" => \"US-ASCII\", \"ANSI_X3.4-1968\" => \"US-ASCII\",\n#   \"SJIS\" => \"Windows-31J\", \"eucJP\" => \"EUC-JP\", \"CP932\" => \"Windows-31J\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Encoding/s/aliases.html"
     },
     {
@@ -4191,7 +4191,7 @@
         "group_by {|obj| ... }  -> Hash"
       ],
       "description": "ブロックを評価した結果をキー、対応する要素の配列を値とするハッシュを返します。",
-      "example": "p (1..6).group_by {|i| i%3} # => {0=>[3, 6], 1=>[1, 4], 2=>[2, 5]}",
+      "example": "p (1..6).group_by {|i| i%3} # => {0 => [3, 6], 1 => [1, 4], 2 => [2, 5]}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Enumerable/i/group_by.html"
     },
     {
@@ -4474,7 +4474,7 @@
         "tally(hash)  ->   Hash"
       ],
       "description": "self に含まれる要素を数え上げた結果を Hash で返します。\nHash のキーは self に含まれる要素で、Hash の値は対応する要素が出現する回数です。",
-      "example": "p [\"a\", \"b\", \"c\", \"b\"].tally  #=> {\"a\"=>1, \"b\"=>2, \"c\"=>1}\n\nh = {}\n[:a, :b, :c].tally(h)\n[:a, :b, :d].tally(h)\n\np h # => {:a=>2, :b=>2, :c=>1, :d=>1}",
+      "example": "p [\"a\", \"b\", \"c\", \"b\"].tally  #=> {\"a\" => 1, \"b\" => 2, \"c\" => 1}\n\nh = {}\n[:a, :b, :c].tally(h)\n[:a, :b, :d].tally(h)\n\np h # => {a: 2, b: 2, c: 1, d: 1}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Enumerable/i/tally.html"
     },
     {
@@ -4486,7 +4486,7 @@
         "to_h(*args) { ... } -> Hash"
       ],
       "description": "self を [key, value] のペアの配列として解析した結果を [c:Hash] にして返します。",
-      "example": "p %i[hello world].each_with_index.to_h # => {:hello => 0, :world => 1}",
+      "example": "p %i[hello world].each_with_index.to_h # => {hello: 0, world: 1}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Enumerable/i/to_h.html"
     },
     {
@@ -6147,7 +6147,7 @@
       "signatures": [
         "File.lutime(atime, mtime, *filename)    -> Integer"
       ],
-      "description": "ファイルの最終アクセス時刻と更新時刻を変更します。\nシンボリックリンクに対しては [m:File.utime]　と違って、シンボリックそのものを変更します。",
+      "description": "ファイルの最終アクセス時刻と更新時刻を変更します。\nシンボリックリンクに対しては [m:File.utime] と違って、シンボリックそのものを変更します。",
       "example": null,
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/File/s/lutime.html"
     },
@@ -6434,7 +6434,7 @@
       "signatures": [
         "File.utime(atime, mtime, *filename)    -> Integer"
       ],
-      "description": "ファイルの最終アクセス時刻と更新時刻を変更します。\nシンボリックリンクに対しては [m:File.lutime]　と違って、シンボリックのリンク先を変更します。",
+      "description": "ファイルの最終アクセス時刻と更新時刻を変更します。\nシンボリックリンクに対しては [m:File.lutime] と違って、シンボリックのリンク先を変更します。",
       "example": "atime = Time.new(2018, 1, 2, 3, 4, 5)\nmtime = Time.new(2018, 2, 3, 4, 5, 6)\np File.utime(atime, mtime, \"testfile\")  # => 1\np File.atime(\"testfile\")              # => 2018-01-02 03:04:05 +0900\np File.mtime(\"testfile\")              # => 2018-02-03 04:05:06 +0900",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/File/s/utime.html"
     },
@@ -7777,7 +7777,7 @@
         "GC.latest_gc_info(key)              -> object"
       ],
       "description": "最新のGCの情報を返します。",
-      "example": "latest = GC.latest_gc_info\np latest # => {:major_by=>nil, :gc_by=>:newobj, :have_finalizer=>false, :immediate_sweep=>false, :state=>:sweeping}\n\nstat = GC.stat\nmerged = GC.latest_gc_info(stat)\np merged == latest.merge(stat) # => true\n\np GC.latest_gc_info(:gc_by)  # => :newobj",
+      "example": "latest = GC.latest_gc_info\np latest # => {major_by: nil, gc_by: :newobj, have_finalizer: false, immediate_sweep: false, state: :sweeping}\n\nstat = GC.stat\nmerged = GC.latest_gc_info(stat)\np merged == latest.merge(stat) # => true\n\np GC.latest_gc_info(:gc_by)  # => :newobj",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/GC/s/latest_gc_info.html"
     },
     {
@@ -7822,7 +7822,7 @@
         "GC.stat(key) -> Numeric"
       ],
       "description": "GC 内部の統計情報を [c:Hash] で返します。",
-      "example": "p GC.stat\n# =>\n# {\n#   :count=>0,\n#   :heap_allocated_pages=>24,\n#   :heap_sorted_length=>24,\n#   :heap_allocatable_pages=>0,\n#   :heap_available_slots=>9783,\n#   :heap_live_slots=>7713,\n#   :heap_free_slots=>2070,\n#   :heap_final_slots=>0,\n#   :heap_marked_slots=>0,\n#   :heap_swept_slots=>0,\n#   :heap_eden_pages=>24,\n#   :heap_tomb_pages=>0,\n#   :total_allocated_pages=>24,\n#   :total_freed_pages=>0,\n#   :total_allocated_objects=>7796,\n#   :total_freed_objects=>83,\n#   :malloc_increase_bytes=>2389312,\n#   :malloc_increase_bytes_limit=>16777216,\n#   :minor_gc_count=>0,\n#   :major_gc_count=>0,\n#   :remembered_wb_unprotected_objects=>0,\n#   :remembered_wb_unprotected_objects_limit=>0,\n#   :old_objects=>0,\n#   :old_objects_limit=>0,\n#   :oldmalloc_increase_bytes=>2389760,\n#   :oldmalloc_increase_bytes_limit=>16777216\n# }",
+      "example": "p GC.stat\n# =>\n# {\n#   count: 0,\n#   heap_allocated_pages: 24,\n#   heap_sorted_length: 24,\n#   heap_allocatable_pages: 0,\n#   heap_available_slots: 9783,\n#   heap_live_slots: 7713,\n#   heap_free_slots: 2070,\n#   heap_final_slots: 0,\n#   heap_marked_slots: 0,\n#   heap_swept_slots: 0,\n#   heap_eden_pages: 24,\n#   heap_tomb_pages: 0,\n#   total_allocated_pages: 24,\n#   total_freed_pages: 0,\n#   total_allocated_objects: 7796,\n#   total_freed_objects: 83,\n#   malloc_increase_bytes: 2389312,\n#   malloc_increase_bytes_limit: 16777216,\n#   minor_gc_count: 0,\n#   major_gc_count: 0,\n#   remembered_wb_unprotected_objects: 0,\n#   remembered_wb_unprotected_objects_limit: 0,\n#   old_objects: 0,\n#   old_objects_limit: 0,\n#   oldmalloc_increase_bytes: 2389760,\n#   oldmalloc_increase_bytes_limit: 16777216\n# }",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/GC/s/stat.html"
     },
     {
@@ -8060,7 +8060,7 @@
         "store(key, value) -> object"
       ],
       "description": "key に対して value を関連づけます。value を返します。",
-      "example": "h = {}\n\nh[:key] = \"value\"\np h # =>{:key => \"value\"}",
+      "example": "h = {}\n\nh[:key] = \"value\"\np h # =>{key: \"value\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/=5b=5d=3d.html"
     },
     {
@@ -8082,7 +8082,7 @@
         "clear -> self"
       ],
       "description": "ハッシュの中身を空にします。",
-      "example": "h = Hash.new(\"default value\")\nh[:some] = \"some\"\np h # => {:some=>\"some\"}\n\nh.clear\n\np h # => {}\np h.default # => \"default value\"",
+      "example": "h = Hash.new(\"default value\")\nh[:some] = \"some\"\np h # => {some: \"some\"}\n\nh.clear\n\np h # => {}\np h.default # => \"default value\"",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/clear.html"
     },
     {
@@ -8094,7 +8094,7 @@
         "dup -> Hash"
       ],
       "description": "selfと同じ内容を持つ新しいハッシュを返します。",
-      "example": "h1 = {\"have\" => \"have a\",\"as\" => \"as a\" }\nh2 = h1.dup\n\nh2[\"have\"] = \"has\"\np h2 # => {\"have\"=>\"has\", \"as\"=>\"as a\"}\np h1 # => {\"have\"=>\"have a\", \"as\"=>\"as a\"}\n\nh2[\"as\"].upcase!\np h2 # => {\"have\"=>\"has\", \"as\"=>\"AS A\"}\np h1 # => {\"have\"=>\"have a\", \"as\"=>\"AS A\"}",
+      "example": "h1 = {\"have\" => \"have a\",\"as\" => \"as a\" }\nh2 = h1.dup\n\nh2[\"have\"] = \"has\"\np h2 # => {\"have\" => \"has\", \"as\" => \"as a\"}\np h1 # => {\"have\" => \"have a\", \"as\" => \"as a\"}\n\nh2[\"as\"].upcase!\np h2 # => {\"have\" => \"has\", \"as\" => \"AS A\"}\np h1 # => {\"have\" => \"have a\", \"as\" => \"AS A\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/clone.html"
     },
     {
@@ -8105,7 +8105,7 @@
         "compact -> Hash"
       ],
       "description": "自身から value が nil のもの取り除いた Hash を生成して返します。",
-      "example": "hash = {a: 1, b: nil, c: 3}\np hash.compact  # => {:a=>1, :c=>3}\np hash          # => {:a=>1, :b=>nil, :c=>3}",
+      "example": "hash = {a: 1, b: nil, c: 3}\np hash.compact  # => {a: 1, c: 3}\np hash          # => {a: 1, b: nil, c: 3}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/compact.html"
     },
     {
@@ -8116,7 +8116,7 @@
         "compact! -> self | nil"
       ],
       "description": "自身から破壊的に value が nil のものを取り除き、変更が行われた場合は self を、そうでなければ nil を返します。",
-      "example": "hash = {a: 1, b: nil, c: 3}\nhash.compact!\np hash          # => {:a=>1, :c=>3}\np hash.compact! # =>  nil",
+      "example": "hash = {a: 1, b: nil, c: 3}\nhash.compact!\np hash          # => {a: 1, c: 3}\np hash.compact! # =>  nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/compact=21.html"
     },
     {
@@ -8161,7 +8161,7 @@
         "default(key) -> object | nil"
       ],
       "description": "ハッシュのデフォルト値を返します。",
-      "example": "h = Hash.new(\"default\")\np h.default        # => \"default\"\np h.default(:some) # => \"default\"\np h # =>{}\n\nh = Hash.new{|hash, key| hash[key] =\"default\" }\np h.default        # => nil\np h.default(:some) # => \"default\"\np h                # => {:some=>\"default\"}\n\nh = Hash.new\np h.default        # => nil\np h.default(:some) # => nil\np h                # => {}",
+      "example": "h = Hash.new(\"default\")\np h.default        # => \"default\"\np h.default(:some) # => \"default\"\np h # =>{}\n\nh = Hash.new{|hash, key| hash[key] =\"default\" }\np h.default        # => nil\np h.default(:some) # => \"default\"\np h                # => {some: \"default\"}\n\nh = Hash.new\np h.default        # => nil\np h.default(:some) # => nil\np h                # => {}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/default.html"
     },
     {
@@ -8194,7 +8194,7 @@
         "default_proc=(pr)"
       ],
       "description": "ハッシュのデフォルト値を返す [c:Proc] オブジェクトを変更します。",
-      "example": "h = {}\nh.default_proc = proc do |hash, key|\n  hash[key] = case\n              when (key % 15).zero?\n                \"FizzBuzz\"\n              when (key % 5).zero?\n                 \"Buzz\"\n              when (key % 3).zero?\n                 \"Fizz\"\n              else\n                 key\n              end\nend\np h[1]  # => 1\np h[2]  # => 2\np h[3]  # => \"Fizz\"\np h[5]  # => \"Buzz\"\np h[15] # => \"FizzBuzz\"\n\nh.default_proc = nil\np h[16] # => nil\n# default_proc が nil になったので `16=>16 が追加されていない`\np h     # => {1=>1, 2=>2, 3=>\"Fizz\", 5=>\"Buzz\", 15=>\"FizzBuzz\"}",
+      "example": "h = {}\nh.default_proc = proc do |hash, key|\n  hash[key] = case\n              when (key % 15).zero?\n                \"FizzBuzz\"\n              when (key % 5).zero?\n                 \"Buzz\"\n              when (key % 3).zero?\n                 \"Fizz\"\n              else\n                 key\n              end\nend\np h[1]  # => 1\np h[2]  # => 2\np h[3]  # => \"Fizz\"\np h[5]  # => \"Buzz\"\np h[15] # => \"FizzBuzz\"\n\nh.default_proc = nil\np h[16] # => nil\n# default_proc が nil になったので `16=>16 が追加されていない`\np h     # => {1 => 1, 2 => 2, 3 => \"Fizz\", 5 => \"Buzz\", 15 => \"FizzBuzz\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/default_proc=3d.html"
     },
     {
@@ -8206,7 +8206,7 @@
         "delete(key) {|key| ... } -> object"
       ],
       "description": "key に対応する要素を取り除きます。",
-      "example": "h = {:ab => \"some\" , :cd => \"all\"}\n\np h.delete(:ab) # => \"some\"\np h.delete(:ef) # => nil\np h.delete(:ef){|key|\"#{key} Nothing\"} # => \"ef Nothing\"\n\np h # => {:cd=>\"all\"}",
+      "example": "h = {:ab => \"some\" , :cd => \"all\"}\n\np h.delete(:ab) # => \"some\"\np h.delete(:ef) # => nil\np h.delete(:ef){|key|\"#{key} Nothing\"} # => \"ef Nothing\"\n\np h # => {cd: \"all\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/delete.html"
     },
     {
@@ -8218,7 +8218,7 @@
         "delete_if {|key, value| ... } -> self"
       ],
       "description": "キーと値を引数としてブロックを評価した結果が真であるような要素を self から削除します。",
-      "example": "h = { 2 => \"8\" ,4 => \"6\" ,6 => \"4\" ,8 => \"2\" }\n\np h.delete_if{|key, value| key.to_i < value.to_i } # => { 6 => \"4\", 8 => \"2\" }\np h.delete_if{|key, value| key.to_i < value.to_i } # => { 6 => \"4\", 8 => \"2\" }",
+      "example": "h = { 2 => \"8\" ,4 => \"6\" ,6 => \"4\" ,8 => \"2\" }\n\np h.delete_if{|key, value| key.to_i < value.to_i } # => {6 => \"4\", 8 => \"2\"}\np h.delete_if{|key, value| key.to_i < value.to_i } # => {6 => \"4\", 8 => \"2\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/delete_if.html"
     },
     {
@@ -8243,7 +8243,7 @@
         "each_pair -> Enumerator"
       ],
       "description": "ハッシュのキーと値を引数としてブロックを評価します。",
-      "example": "{:a=>1, :b=>2}.each {|a| p a}\n# => [:a, 1]\n#   [:b, 2]\n\n{:a=>1, :b=>2}.each {|k, v| p [k, v]}\n# => [:a, 1]\n#   [:b, 2]\n\np({:a=>1, :b=>2}.each_pair)  # => #<Enumerator: {:a=>1, :b=>2}:each_pair>",
+      "example": "{:a=>1, :b=>2}.each {|a| p a}\n# => [:a, 1]\n#   [:b, 2]\n\n{:a=>1, :b=>2}.each {|k, v| p [k, v]}\n# => [:a, 1]\n#   [:b, 2]\n\np({:a=>1, :b=>2}.each_pair)  # => #<Enumerator: {a: 1, b: 2}:each_pair>",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/each.html"
     },
     {
@@ -8255,7 +8255,7 @@
         "each_key -> Enumerator"
       ],
       "description": "ハッシュのキーを引数としてブロックを評価します。",
-      "example": "{:a=>1, :b=>2}.each_key {|k| p k}\n# => :a\n#   :b\n\np({:a=>1, :b=>2}.each_key)  # => #<Enumerator: {:a=>1, :b=>2}:each_key>",
+      "example": "{:a=>1, :b=>2}.each_key {|k| p k}\n# => :a\n#   :b\n\np({:a=>1, :b=>2}.each_key)  # => #<Enumerator: {a: 1, b: 2}:each_key>",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/each_key.html"
     },
     {
@@ -8267,7 +8267,7 @@
         "each_value -> Enumerator"
       ],
       "description": "ハッシュの値を引数としてブロックを評価します。",
-      "example": "{:a=>1, :b=>2}.each_value {|v| p v}\n# => 1\n#   2\n\np({:a=>1, :b=>2}.each_value)  # => #<Enumerator: {:a=>1, :b=>2}:each_value>",
+      "example": "{:a=>1, :b=>2}.each_value {|v| p v}\n# => 1\n#   2\n\np({:a=>1, :b=>2}.each_value)  # => #<Enumerator: {a: 1, b: 2}:each_value>",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/each_value.html"
     },
     {
@@ -8300,7 +8300,7 @@
         "except(*keys) -> Hash"
       ],
       "description": "引数で指定された以外のキーとその値だけを含む Hash を返します。",
-      "example": "h = { a: 100, b: 200, c: 300 }\np h.except(:a) # => {:b=>200, :c=>300}",
+      "example": "h = { a: 100, b: 200, c: 300 }\np h.except(:a) # => {b: 200, c: 300}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/except.html"
     },
     {
@@ -8353,7 +8353,7 @@
         "filter! {|key, value| ... }   -> self | nil"
       ],
       "description": "キーと値を引数としてブロックを評価した結果が真であるような要素を self\nに残します。",
-      "example": "h1 = {}\nc = (\"a\"..\"g\")\nc.each_with_index {|e, i| h1[i] = e }\n\np h1.select!  # => #<Enumerator: {0=>\"a\", 1=>\"b\", 2=>\"c\", 3=>\"d\", 4=>\"e\", 5=>\"f\", 6=>\"g\"}:select!>\n\np h1.select! { |k, v| k % 3 == 0 }  # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}\np h1.select! { |k, v| true }      # => nil",
+      "example": "h1 = {}\nc = (\"a\"..\"g\")\nc.each_with_index {|e, i| h1[i] = e }\n\np h1.select!  # => #<Enumerator: {0 => \"a\", 1 => \"b\", 2 => \"c\", 3 => \"d\", 4 => \"e\", 5 => \"f\", 6 => \"g\"}:select!>\n\np h1.select! { |k, v| k % 3 == 0 }  # => {0 => \"a\", 3 => \"d\", 6 => \"g\"}\np h1.select! { |k, v| true }      # => nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/filter=21.html"
     },
     {
@@ -8413,7 +8413,7 @@
         "inspect  -> String"
       ],
       "description": "ハッシュの内容を人間に読みやすい文字列にして返します。",
-      "example": "h = { \"c\" => 300, \"a\" => 100, \"d\" => 400  }\np h.inspect # => \"{\\\"c\\\"=>300, \\\"a\\\"=>100, \\\"d\\\"=>400}\"",
+      "example": "h = { \"c\" => 300, \"a\" => 100, \"d\" => 400, :e => 500 }\np h.inspect # => \"{\\\"c\\\" => 300, \\\"a\\\" => 100, \\\"d\\\" => 400, e: 500}\"",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/inspect.html"
     },
     {
@@ -8424,7 +8424,7 @@
         "invert -> Hash"
       ],
       "description": "値からキーへのハッシュを作成して返します。",
-      "example": "h = { \"a\" => 0, \"b\" => 100, \"c\" => 200, \"d\" => 300, \"e\" => 300 }\np h.invert   # => {0=>\"a\", 100=>\"b\", 200=>\"c\", 300=>\"e\"}",
+      "example": "h = { \"a\" => 0, \"b\" => 100, \"c\" => 200, \"d\" => 300, \"e\" => 300 }\np h.invert   # => {0 => \"a\", 100 => \"b\", 200 => \"c\", 300 => \"e\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/invert.html"
     },
     {
@@ -8436,7 +8436,7 @@
         "keep_if {|key, value| ... } -> self"
       ],
       "description": "キーと値を引数としてブロックを評価した結果が真であるような要素を self\nに残します。",
-      "example": "h2 = {}\nc = (\"a\"..\"g\")\nc.each_with_index {|e, i| h2[i] = e }\n\np h2.keep_if  # => #<Enumerator: {0=>\"a\", 1=>\"b\", 2=>\"c\", 3=>\"d\", 4=>\"e\", 5=>\"f\", 6=>\"g\"}:keep_if>\n\np h2.keep_if { |k, v| k % 3 == 0 }  # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}\np h2.keep_if { |k, v| true }      # => {0=>\"a\", 3=>\"d\", 6=>\"g\"}",
+      "example": "h2 = {}\nc = (\"a\"..\"g\")\nc.each_with_index {|e, i| h2[i] = e }\n\np h2.keep_if  # => #<Enumerator: {0 => \"a\", 1 => \"b\", 2 => \"c\", 3 => \"d\", 4 => \"e\", 5 => \"f\", 6 => \"g\"}:keep_if>\n\np h2.keep_if { |k, v| k % 3 == 0 }  # => {0 => \"a\", 3 => \"d\", 6 => \"g\"}\np h2.keep_if { |k, v| true }      # => {0 => \"a\", 3 => \"d\", 6 => \"g\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/keep_if.html"
     },
     {
@@ -8482,7 +8482,7 @@
         "merge(*others) {|key, self_val, other_val| ... } -> Hash"
       ],
       "description": "selfとothersのハッシュの内容を順番にマージ(統合)した結果を返します。\nデフォルト値はselfの設定のままです。",
-      "example": "h1 = { \"a\" => 100, \"b\" => 200 }\nh2 = { \"b\" => 246, \"c\" => 300 }\nh3 = { \"b\" => 357, \"d\" => 400 }\np h1.merge        # => {\"a\"=>100, \"b\"=>200}\np h1.merge(h2)    # => {\"a\"=>100, \"b\"=>246, \"c\"=>300}\np h1.merge(h2, h3)  # => {\"a\"=>100, \"b\"=>357, \"c\"=>300, \"d\"=>400}\np h1.merge(h2) {|key, oldval, newval| newval - oldval}\n                  # => {\"a\"=>100, \"b\"=>46,  \"c\"=>300}\np h1.merge(h2, h3) {|key, oldval, newval| newval - oldval}\n                  # => {\"a\"=>100, \"b\"=>311, \"c\"=>300, \"d\"=>400}\np h1              # => {\"a\"=>100, \"b\"=>200}",
+      "example": "h1 = { \"a\" => 100, \"b\" => 200 }\nh2 = { \"b\" => 246, \"c\" => 300 }\nh3 = { \"b\" => 357, \"d\" => 400 }\np h1.merge        # => {\"a\" => 100, \"b\" => 200}\np h1.merge(h2)    # => {\"a\" => 100, \"b\" => 246, \"c\" => 300}\np h1.merge(h2, h3)  # => {\"a\" => 100, \"b\" => 357, \"c\" => 300, \"d\" => 400}\np h1.merge(h2) {|key, oldval, newval| newval - oldval}\n                  # => {\"a\" => 100, \"b\" => 46, \"c\" => 300}\np h1.merge(h2, h3) {|key, oldval, newval| newval - oldval}\n                  # => {\"a\" => 100, \"b\" => 311, \"c\" => 300, \"d\" => 400}\np h1              # => {\"a\" => 100, \"b\" => 200}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/merge.html"
     },
     {
@@ -8496,7 +8496,7 @@
         "update(*others) {|key, self_val, other_val| ... } -> self"
       ],
       "description": "selfとothersのハッシュの内容を順番にマージ(統合)します。",
-      "example": "h1 = { \"a\" => 100, \"b\" => 200 }\np h1.merge!        # => {\"a\"=>100, \"b\"=>200}\np h1               # => {\"a\"=>100, \"b\"=>200}",
+      "example": "h1 = { \"a\" => 100, \"b\" => 200 }\np h1.merge!        # => {\"a\" => 100, \"b\" => 200}\np h1               # => {\"a\" => 100, \"b\" => 200}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/merge=21.html"
     },
     {
@@ -8530,7 +8530,7 @@
         "reject                     -> Enumerator"
       ],
       "description": "self を複製して、ブロックを評価した値が真になる要素を削除したハッシュを返します。",
-      "example": "h = { 2 =>\"8\" ,4 =>\"6\" ,6 =>\"4\" ,8 =>\"2\" }\n\np h.reject{|key, value| key.to_i < value.to_i} # => {6=>\"4\", 8=>\"2\"}",
+      "example": "h = { 2 =>\"8\" ,4 =>\"6\" ,6 =>\"4\" ,8 =>\"2\" }\n\np h.reject{|key, value| key.to_i < value.to_i} # => {6 => \"4\", 8 => \"2\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/reject.html"
     },
     {
@@ -8542,7 +8542,7 @@
         "reject! {|key, value| ... } -> self|nil"
       ],
       "description": "キーと値を引数としてブロックを評価した結果が真であるような要素を self から削除します。",
-      "example": "h = { 2 => \"8\" ,4 => \"6\" ,6 => \"4\" ,8 => \"2\" }\n\np h.reject!{|key, value| key.to_i < value.to_i }   # => { 6 => \"4\", 8 => \"2\" }\np h                                                # => { 6 => \"4\", 8 => \"2\" }\np h.reject!{|key, value| key.to_i < value.to_i }   # => nil",
+      "example": "h = { 2 => \"8\" ,4 => \"6\" ,6 => \"4\" ,8 => \"2\" }\n\np h.reject!{|key, value| key.to_i < value.to_i }   # => {6 => \"4\", 8 => \"2\"}\np h                                                # => {6 => \"4\", 8 => \"2\"}\np h.reject!{|key, value| key.to_i < value.to_i }   # => nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/reject=21.html"
     },
     {
@@ -8553,7 +8553,7 @@
         "replace(other) -> self"
       ],
       "description": "ハッシュの内容を other の内容で置き換えます。",
-      "example": "foo = {1 => 'a', 2 => 'b'}\nbar = {2 => 'B', 3 => 'C'}\n\nfoo.replace(bar)\np foo  # => {2=>\"B\", 3=>\"C\"}\n\nzoo = {}\nzoo = bar.dup\np zoo  # => {2=>\"B\", 3=>\"C\"}\n\nclass Foo\n  def to_hash\n    {:japan => 'kyoto'}\n  end\nend\n\nh = Hash.new\nh.replace(Foo.new) #暗黙の変換\np h # => {:japan=>\"kyoto\"}",
+      "example": "foo = {1 => 'a', 2 => 'b'}\nbar = {2 => 'B', 3 => 'C'}\n\nfoo.replace(bar)\np foo  # => {2 => \"B\", 3 => \"C\"}\n\nzoo = {}\nzoo = bar.dup\np zoo  # => {2 => \"B\", 3 => \"C\"}\n\nclass Foo\n  def to_hash\n    {:japan => 'kyoto'}\n  end\nend\n\nh = Hash.new\nh.replace(Foo.new) #暗黙の変換\np h # => {japan: \"kyoto\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/replace.html"
     },
     {
@@ -8575,7 +8575,7 @@
         "slice(*keys) -> Hash"
       ],
       "description": "引数で指定されたキーとその値だけを含む Hash を返します。",
-      "example": "h = { a: 100, b: 200, c: 300 }\np h.slice(:a)         # => {:a=>100}\np h.slice(:c, :b)     # => {:c=>300, :b=>200}\np h.slice(:b, :c, :d) # => {:b=>200, :c=>300}",
+      "example": "h = { a: 100, b: 200, c: 300 }\np h.slice(:a)         # => {a: 100}\np h.slice(:c, :b)     # => {c: 300, b: 200}\np h.slice(:b, :c, :d) # => {b: 200, c: 300}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/slice.html"
     },
     {
@@ -8633,7 +8633,7 @@
         "transform_keys              -> Enumerator"
       ],
       "description": "すべてのキーに対してブロックを呼び出した結果で置き換えたハッシュを返します。\n値は変化しません。",
-      "example": "h = { a: 1, b: 2, c: 3 }\np h.transform_keys {|k| k.to_s } # => {\"a\"=>1, \"b\"=>2, \"c\"=>3}\np h.transform_keys(a: \"a\", d: \"d\") # => {\"a\"=>1, :b=>2, :c=>3}\np h.transform_keys(&:to_s)       # => {\"a\"=>1, \"b\"=>2, \"c\"=>3}\np h.transform_keys.with_index {|k, i| \"#{k}.#{i}\" }\n                                 # => {\"a.0\"=>1, \"b.1\"=>2, \"c.2\"=>3}",
+      "example": "h = { a: 1, b: 2, c: 3 }\np h.transform_keys {|k| k.to_s } # => {\"a\" => 1, \"b\" => 2, \"c\" => 3}\np h.transform_keys(a: \"a\", d: \"d\") # => {\"a\" => 1, b: 2, c: 3}\np h.transform_keys(&:to_s)       # => {\"a\" => 1, \"b\" => 2, \"c\" => 3}\np h.transform_keys.with_index {|k, i| \"#{k}.#{i}\" }\n                                 # => {\"a.0\" => 1, \"b.1\" => 2, \"c.2\" => 3}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/transform_keys.html"
     },
     {
@@ -8646,7 +8646,7 @@
         "transform_keys!                -> Enumerator"
       ],
       "description": "すべてのキーに対してブロックを呼び出した結果でハッシュのキーを変更します。\n値は変化しません。",
-      "example": "h = { a: 1, b: 2, c: 3 }\np h.transform_keys! {|k| k.to_s } # => {\"a\"=>1, \"b\"=>2, \"c\"=>3}\np h.transform_keys!(&:to_sym)     # => {:a=>1, :b=>2, :c=>3}\np h.transform_keys!(a: \"a\", d: \"d\") # => {\"a\"=>1, :b=>2, :c=>3}\np h.transform_keys!.with_index {|k, i| \"#{k}.#{i}\" }\n                                  # => {\"a.0\"=>1, \"b.1\"=>2, \"c.2\"=>3}",
+      "example": "h = { a: 1, b: 2, c: 3 }\np h.transform_keys! {|k| k.to_s } # => {\"a\" => 1, \"b\" => 2, \"c\" => 3}\np h.transform_keys!(&:to_sym)     # => {a: 1, b: 2, c: 3}\np h.transform_keys!(a: \"a\", d: \"d\") # => {\"a\" => 1, b: 2, c: 3}\np h.transform_keys!.with_index {|k, i| \"#{k}.#{i}\" }\n                                  # => {\"a.0\" => 1, \"b.1\" => 2, \"c.2\" => 3}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/i/transform_keys=21.html"
     },
     {
@@ -8703,7 +8703,7 @@
         "Hash.[](other) -> Hash"
       ],
       "description": "新しいハッシュを生成します。\n引数otherと同一のキーと値を持つ新たなハッシュを生成して返します。",
-      "example": "h = {1 => \"value\"}\nh.default = \"none\"\n\ng = Hash[h]\np g # => {1=>\"value\"}\n\np h[:no] # => \"none\"\np g[:no] # => nil\n\nh[:add] = \"some\"\np h # => {1=>\"value\", :add=>\"some\"}\np g # => {1=>\"value\"}\n\nh[1] << 'plus' #破壊的操作\np h # => {1=>\"valueplus\", :add=>\"some\"}\np g # => {1=>\"valueplus\"}",
+      "example": "h = {1 => \"value\"}\nh.default = \"none\"\n\ng = Hash[h]\np g # => {1 => \"value\"}\n\np h[:no] # => \"none\"\np g[:no] # => nil\n\nh[:add] = \"some\"\np h # => {1 => \"value\", add: \"some\"}\np g # => {1 => \"value\"}\n\nh[1] << 'plus' #破壊的操作\np h # => {1 => \"valueplus\", add: \"some\"}\np g # => {1 => \"valueplus\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/s/=5b=5d.html"
     },
     {
@@ -8747,7 +8747,7 @@
         "Hash.try_convert(obj) -> Hash | nil"
       ],
       "description": "to_hash メソッドを用いて obj をハッシュに変換しようとします。",
-      "example": "p Hash.try_convert({1=>2}) # => {1=>2}\np Hash.try_convert(\"1=>2\") # => nil",
+      "example": "p Hash.try_convert({1=>2}) # => {1 => 2}\np Hash.try_convert(\"1=>2\") # => nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Hash/s/try_convert.html"
     },
     {
@@ -10949,7 +10949,7 @@
         "Hash(arg) -> Hash"
       ],
       "description": "引数 arg で指定したオブジェクトを to_hash メソッドを呼び出す事で\n[c:Hash] オブジェクトに変換します。nil か [] を指定した場合は空の\n[c:Hash] オブジェクトを返します。",
-      "example": "p Hash([])        # => {}\np Hash(nil)       # => {}\np Hash(key: :value) # => {:key => :value}\nHash([1, 2, 3])   # ~> TypeError",
+      "example": "p Hash([])        # => {}\np Hash(nil)       # => {}\np Hash(key: :value) # => {key: :value}\nHash([1, 2, 3])   # ~> TypeError",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Kernel/m/Hash.html"
     },
     {
@@ -11653,7 +11653,7 @@
         "KeyError.new(error_message = \"\", receiver:, key:)  -> KeyError"
       ],
       "description": "例外オブジェクトを生成して返します。",
-      "example": "h = {foo: 1}\nerr = KeyError.new(\"Message\", receiver: h, key: :bar)\np err.message  # => \"Message\"\np err.receiver # => {:foo=>1}\np err.key      # => :bar",
+      "example": "h = {foo: 1}\nerr = KeyError.new(\"Message\", receiver: h, key: :bar)\np err.message  # => \"Message\"\np err.receiver # => {foo: 1}\np err.key      # => :bar",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/KeyError/s/new.html"
     },
     {
@@ -11802,7 +11802,7 @@
         "deconstruct_keys(array_of_names) -> Hash"
       ],
       "description": "引数で指定された名前の名前付きキャプチャを [c:Hash] で返します。",
-      "example": "m = /(?<hours>\\d{2}):(?<minutes>\\d{2}):(?<seconds>\\d{2})/.match(\"18:37:22\")\np m.deconstruct_keys([:hours, :minutes]) # => {:hours => \"18\", :minutes => \"37\"}\np m.deconstruct_keys(nil) # => {:hours => \"18\", :minutes => \"37\", :seconds => \"22\"}\n\n# 名前付きキャプチャが定義されていなかった場合は空のハッシュを返す\nm = /(\\d{2}):(\\d{2}):(\\d{2})/.match(\"18:37:22\")\np m.deconstruct_keys(nil) # => {}",
+      "example": "m = /(?<hours>\\d{2}):(?<minutes>\\d{2}):(?<seconds>\\d{2})/.match(\"18:37:22\")\np m.deconstruct_keys([:hours, :minutes]) # => {hours: \"18\", minutes: \"37\"}\np m.deconstruct_keys(nil) # => {hours: \"18\", minutes: \"37\", seconds: \"22\"}\n\n# 名前付きキャプチャが定義されていなかった場合は空のハッシュを返す\nm = /(\\d{2}):(\\d{2}):(\\d{2})/.match(\"18:37:22\")\np m.deconstruct_keys(nil) # => {}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/MatchData/i/deconstruct_keys.html"
     },
     {
@@ -11882,7 +11882,7 @@
         "named_captures(symbolize_names: false) -> Hash"
       ],
       "description": "名前付きキャプチャをHashで返します。",
-      "example": "m = /(?<a>.)(?<b>.)/.match(\"01\")\np m.named_captures # => {\"a\" => \"0\", \"b\" => \"1\"}\n\nm = /(?<a>.)(?<b>.)?/.match(\"0\")\np m.named_captures # => {\"a\" => \"0\", \"b\" => nil}\n\nm = /(?<a>.)(?<a>.)/.match(\"01\")\np m.named_captures # => {\"a\" => \"1\"}\n\nm = /(?<a>x)|(?<a>y)/.match(\"x\")\np m.named_captures # => {\"a\" => \"x\"}\n\nm = /(?<a>.)(?<a>.)/.match(\"01\")\np m.named_captures(symbolize_names: true) #=> {:a => \"1\"}",
+      "example": "m = /(?<a>.)(?<b>.)/.match(\"01\")\np m.named_captures # => {\"a\" => \"0\", \"b\" => \"1\"}\n\nm = /(?<a>.)(?<b>.)?/.match(\"0\")\np m.named_captures # => {\"a\" => \"0\", \"b\" => nil}\n\nm = /(?<a>.)(?<a>.)/.match(\"01\")\np m.named_captures # => {\"a\" => \"1\"}\n\nm = /(?<a>x)|(?<a>y)/.match(\"x\")\np m.named_captures # => {\"a\" => \"x\"}\n\nm = /(?<a>.)(?<a>.)/.match(\"01\")\np m.named_captures(symbolize_names: true) #=> {a: \"1\"}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/MatchData/i/named_captures.html"
     },
     {
@@ -14405,7 +14405,7 @@
         "to_hash -> Hash"
       ],
       "description": "オブジェクトの [c:Hash] への暗黙の変換が必要なときに内部で呼ばれます。\nデフォルトでは定義されていません。",
-      "example": "class Foo\n  def to_hash\n    {'as' => 24}\n  end\nend\n\nit = Foo.new\np({:as => 12}.merge(it)) # => {\"as\"=>24, :as=>12}",
+      "example": "class Foo\n  def to_hash\n    {'as' => 24}\n  end\nend\n\nit = Foo.new\np({:as => 12}.merge(it)) # => {\"as\" => 24, as: 12}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Object/i/to_hash.html"
     },
     {
@@ -14504,7 +14504,7 @@
         "count_objects(result_hash = {}) -> Hash"
       ],
       "description": "オブジェクトを種類ごとにカウントした結果を [c:Hash] として返します。",
-      "example": "p ObjectSpace.count_objects # => {:TOTAL=>10000, :FREE=>3011, :T_OBJECT=>6, :T_CLASS=>404, ...}",
+      "example": "p ObjectSpace.count_objects # => {TOTAL: 10000, FREE: 3011, T_OBJECT: 6, T_CLASS: 404, ...}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/ObjectSpace/m/count_objects.html"
     },
     {
@@ -17226,7 +17226,7 @@
         "named_captures -> { String => [Integer] }"
       ],
       "description": "self に含まれる名前付きキャプチャ（named capture）の情報を [c:Hash] で返します。",
-      "example": "p /(?<foo>.)(?<bar>.)/.named_captures\n# => {\"foo\"=>[1], \"bar\"=>[2]}\n\np /(?<foo>.)(?<foo>.)/.named_captures\n# => {\"foo\"=>[1, 2]}\n\n# 名前付きキャプチャを持たないときは空の Hash を返します。\np /(.)(.)/.named_captures\n# => {}",
+      "example": "p /(?<foo>.)(?<bar>.)/.named_captures\n# => {\"foo\" => [1], \"bar\" => [2]}\n\np /(?<foo>.)(?<foo>.)/.named_captures\n# => {\"foo\" => [1, 2]}\n\n# 名前付きキャプチャを持たないときは空の Hash を返します。\np /(.)(.)/.named_captures\n# => {}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Regexp/i/named_captures.html"
     },
     {
@@ -17507,7 +17507,7 @@
         "RubyVM.stat(sym) -> Integer"
       ],
       "description": "VM 内部のキャッシュなどに関する統計情報を返します。",
-      "example": "p RubyVM.stat\n# => {:constant_cache_invalidations=>2, :constant_cache_misses=>14,\n#     :global_cvar_state=>27, :next_shape_id=>225, :shape_cache_size=>1024}\np RubyVM.stat(:next_shape_id)\n# => 225",
+      "example": "p RubyVM.stat\n# => {constant_cache_invalidations: 2, constant_cache_misses: 14,\n#     global_cvar_state: 27, next_shape_id: 225, shape_cache_size: 1024}\np RubyVM.stat(:next_shape_id)\n# => 225",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/RubyVM/s/stat.html"
     },
     {
@@ -18677,7 +18677,7 @@
         "list    -> Hash"
       ],
       "description": "シグナル名とシグナル番号を対応づけた [c:Hash] オブジェクトを返します。",
-      "example": "p Signal.list   # => {\"WINCH\"=>28, \"PROF\"=>27, ...}",
+      "example": "p Signal.list   # => {\"WINCH\" => 28, \"PROF\" => 27, ...}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Signal/m/list.html"
     },
     {
@@ -20226,7 +20226,7 @@
         "deconstruct_keys(array_of_names) -> Hash"
       ],
       "description": "self のメンバの名前と値の組を [c:Hash] で返します。",
-      "example": "Customer = Struct.new(:name, :address, :zip)\njoe = Customer.new(\"Joe Smith\", \"123 Maple, Anytown NC\", 12345)\nh = joe.deconstruct_keys([:zip, :address])\np h # => {:zip=>12345, :address=>\"123 Maple, Anytown NC\"}\n\n# 引数が nil の場合は全てのメンバを返します。\nh = joe.deconstruct_keys(nil)\np h # => {:name=>\"Joseph Smith, Jr.\", :address=>\"123 Maple, Anytown NC\", :zip=>12345}",
+      "example": "Customer = Struct.new(:name, :address, :zip)\njoe = Customer.new(\"Joe Smith\", \"123 Maple, Anytown NC\", 12345)\nh = joe.deconstruct_keys([:zip, :address])\np h # => {zip: 12345, address: \"123 Maple, Anytown NC\"}\n\n# 引数が nil の場合は全てのメンバを返します。\nh = joe.deconstruct_keys(nil)\np h # => {name: \"Joseph Smith, Jr.\", address: \"123 Maple, Anytown NC\", zip: 12345}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Struct/i/deconstruct_keys.html"
     },
     {
@@ -20355,7 +20355,7 @@
         "to_h {|member, value| block } -> Hash"
       ],
       "description": "self のメンバ名([c:Symbol])と値の組を [c:Hash] にして返します。",
-      "example": "Customer = Struct.new(:name, :address, :zip)\np Customer.new(\"Joe Smith\", \"123 Maple, Anytown NC\", 12345).to_h\n# => {:name=>\"Joe Smith\", :address=>\"123 Maple, Anytown NC\", :zip=>12345}",
+      "example": "Customer = Struct.new(:name, :address, :zip)\np Customer.new(\"Joe Smith\", \"123 Maple, Anytown NC\", 12345).to_h\n# => {name: \"Joe Smith\", address: \"123 Maple, Anytown NC\", zip: 12345}",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Struct/i/to_h.html"
     },
     {
