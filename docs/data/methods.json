@@ -3541,9 +3541,9 @@
       "class_name": "Encoding",
       "method_kind": "class_method",
       "signatures": [
-        "Encoding.locale_charmap -> String | nil"
+        "Encoding.locale_charmap -> String"
       ],
-      "description": "ロケールエンコーディングを決定するために用いる、locale charmap 名を返します。nl_langinfo 等がない環境では nil を、miniruby では ASCII_8BIT を返します。",
+      "description": "ロケールエンコーディングを決定するために用いる、locale charmap 名を返します。nl_langinfo 等が使えず locale charmap 名を取得できない環境では \"US-ASCII\" を返します。",
       "example": "p Encoding.locale_charmap # => \"ANSI_X3.4-1968\"",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Encoding/s/locale_charmap.html"
     },
