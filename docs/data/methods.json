@@ -18490,6 +18490,17 @@
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/empty=3f.html"
     },
     {
+      "method_name": "eql?",
+      "class_name": "Set",
+      "method_kind": "instance_method",
+      "signatures": [
+        "eql?(other) -> bool"
+      ],
+      "description": "other が Set オブジェクトであり、self と同じ要素を持つときに true を返します。",
+      "example": "p Set[1, 2].eql?(Set[2, 1])    # => true\np Set[1, 2].eql?(Set[1, 2, 3]) # => false\np Set[1, 2].eql?([1, 2])       # => false\np Set[1.0].eql?(Set[1])        # => false",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/eql=3f.html"
+    },
+    {
       "method_name": "filter!",
       "class_name": "Set",
       "method_kind": "instance_method",
@@ -18522,6 +18533,17 @@
       "description": "集合を再帰的かつ破壊的に平坦化します。集合の要素に変更が発生した場合には self を、そうでない場合には nil を返します。",
       "example": "s = Set[Set[1,2], 3]\ns.flatten!\np s           # => Set[1, 2, 3]\np s.flatten!  # => nil",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/flatten=21.html"
+    },
+    {
+      "method_name": "hash",
+      "class_name": "Set",
+      "method_kind": "instance_method",
+      "signatures": [
+        "hash -> Integer"
+      ],
+      "description": "self のハッシュ値を返します。",
+      "example": "p Set[1, 2].hash == Set[2, 1].hash # => true\nh = {Set[1, 2] => :a}\np h[Set[2, 1]]                      # => :a",
+      "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/hash.html"
     },
     {
       "method_name": "inspect",
