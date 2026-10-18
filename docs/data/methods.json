@@ -2900,7 +2900,9 @@
       "method_kind": "class_method",
       "signatures": [
         "Dir.glob(pattern, flags = 0, base: nil, sort: true)                -> [String]",
-        "Dir.glob(pattern, flags = 0, base: nil, sort: true) {|file| ...}   -> nil"
+        "Dir.glob(pattern, flags = 0, base: nil, sort: true) {|file| ...}   -> nil",
+        "Dir.glob(pattern, flags: 0, base: nil, sort: true)                 -> [String]",
+        "Dir.glob(pattern, flags: 0, base: nil, sort: true) {|file| ...}    -> nil"
       ],
       "description": "ワイルドカードの展開を行い、パターンにマッチするファイル名を文字列の配列として返します。\nパターンにマッチするファイルがない場合は空の配列を返します。",
       "example": "p Dir.glob(\"*\")                    #=> [\"bar\", \"foo\"]\np Dir.glob(\"*\", File::FNM_DOTMATCH)  #=> [\".\", \"bar\", \"foo\"]",
@@ -5523,9 +5525,9 @@
       "class_name": "Fiber",
       "method_kind": "instance_method",
       "signatures": [
-        "raise                                            -> object",
-        "raise(message)                                   -> object",
-        "raise(exception, message = nil, backtrace = nil) -> object"
+        "raise                                                       -> object",
+        "raise(message, cause: $!)                                   -> object",
+        "raise(exception, message = nil, backtrace = nil, cause: $!) -> object"
       ],
       "description": "selfが表すファイバーが最後に [m:Fiber.yield] を呼んだ場所で例外を発生させます。",
       "example": "f = Fiber.new { Fiber.yield }\nf.resume\nf.raise \"Error!\" # => Error! (RuntimeError)",
@@ -7878,7 +7880,7 @@
       "class_name": "GC",
       "method_kind": "class_method",
       "signatures": [
-        "GC.verify_compaction_references(toward: nil, double_heap: nil) -> Hash"
+        "GC.verify_compaction_references(toward: nil, double_heap: false, expand_heap: false) -> Hash"
       ],
       "description": "コンパクションの参照の一貫性を検証します。",
       "example": null,
@@ -10139,7 +10141,7 @@
         "valid? -> bool"
       ],
       "description": "バッファがアクセス可能な場合に true を返します。",
-      "example": null,
+      "example": "buf = IO::Buffer.new(8)\npart = buf.slice(4, 4)\np part.valid? # => true\n\nbuf.resize(4)\np part.valid? # => false\n\nbuf.resize(8)\np part.valid? # => true",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/IO=3a=3aBuffer/i/valid=3f.html"
     },
     {
@@ -11373,7 +11375,8 @@
       "class_name": "Kernel",
       "method_kind": "module_function",
       "signatures": [
-        "printf(format, *arg) -> nil",
+        "printf                     -> nil",
+        "printf(format, *arg)       -> nil",
         "printf(port, format, *arg) -> nil"
       ],
       "description": "C 言語の printf と同じように、format に従い引数を文字列に変換して port に出力します。",
@@ -11706,8 +11709,8 @@
       "class_name": "Marshal",
       "method_kind": "module_function",
       "signatures": [
-        "load(port, proc = nil, options = {})      -> object",
-        "restore(port, proc = nil, options = {})   -> object"
+        "load(port, proc = nil, freeze: false)      -> object",
+        "restore(port, proc = nil, freeze: false)   -> object"
       ],
       "description": "port からマーシャルデータを読み込んで、元のオブジェクトと同じ状態をもつオブジェクトを生成します。",
       "example": "str = Marshal.dump([\"a\", 1, 10 ** 10, 1.0, :foo])\np Marshal.load(str, proc {|obj| p obj})\n\n# => \"a\"\n#    1\n#    10000000000\n#    1.0\n#    :foo\n#    [\"a\", 1, 10000000000, 1.0, :foo]\n#    [\"a\", 1, 10000000000, 1.0, :foo]",
@@ -13545,10 +13548,10 @@
       "class_name": "Numeric",
       "method_kind": "instance_method",
       "signatures": [
-        "ceil   -> Integer"
+        "ceil(ndigits = 0) -> Integer | Float"
       ],
       "description": "self と等しいかより大きな整数のうち最小のものを返します。",
-      "example": "p 1.ceil      # => 1\np 1.2.ceil    # => 2\np (-1.2).ceil # => -1\np (-1.5).ceil # => -1",
+      "example": "p 1.ceil      # => 1\np 1.2.ceil    # => 2\np (-1.2).ceil # => -1\np (-1.5).ceil # => -1\n\np 1.234567.ceil(2)   # => 1.24\np 34567.89.ceil(-2)  # => 34600",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Numeric/i/ceil.html"
     },
     {
@@ -13645,10 +13648,10 @@
       "class_name": "Numeric",
       "method_kind": "instance_method",
       "signatures": [
-        "floor(ndigits = 0) -> Integer"
+        "floor(ndigits = 0) -> Integer | Float"
       ],
       "description": "self と等しいかより小さな整数のうち最大のものを返します。",
-      "example": "p 1.floor      # => 1\np 1.2.floor    # => 1\np (-1.2).floor # => -2\np (-1.5).floor # => -2",
+      "example": "p 1.floor      # => 1\np 1.2.floor    # => 1\np (-1.2).floor # => -2\np (-1.5).floor # => -2\n\np 1.234567.floor(2)   # => 1.23\np 34567.89.floor(-2)  # => 34500",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Numeric/i/floor.html"
     },
     {
@@ -13812,10 +13815,10 @@
       "class_name": "Numeric",
       "method_kind": "instance_method",
       "signatures": [
-        "round   -> Integer"
+        "round(ndigits = 0, half: :up) -> Integer | Float"
       ],
       "description": "self ともっとも近い整数を返します。",
-      "example": "p 1.round      # => 1\np 1.2.round    # => 1\np (-1.2).round # => -1\np (-1.5).round # => -2",
+      "example": "p 1.round      # => 1\np 1.2.round    # => 1\np (-1.2).round # => -1\np (-1.5).round # => -2\n\np 1.234567.round(2)        # => 1.23\np 34567.89.round(-2)       # => 34600\np 2.5.round(half: :even)   # => 2\np 2.5.round(half: :down)   # => 2",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Numeric/i/round.html"
     },
     {
@@ -13864,10 +13867,10 @@
       "class_name": "Numeric",
       "method_kind": "instance_method",
       "signatures": [
-        "truncate   -> Integer"
+        "truncate(ndigits = 0) -> Integer | Float"
       ],
       "description": "0 から self までの整数で、self にもっとも近い整数を返します。",
-      "example": "p 1.truncate      # => 1\np 1.2.truncate    # => 1\np (-1.2).truncate # => -1\np (-1.5).truncate # => -1",
+      "example": "p 1.truncate      # => 1\np 1.2.truncate    # => 1\np (-1.2).truncate # => -1\np (-1.5).truncate # => -1\n\np 1.234567.truncate(2)   # => 1.23\np 34567.89.truncate(-2)  # => 34500",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Numeric/i/truncate.html"
     },
     {
@@ -13955,7 +13958,7 @@
         "clone(freeze: nil) -> object"
       ],
       "description": "オブジェクトの複製を作成して返します。",
-      "example": "obj = \"string\"\ndef obj.fuga\nend\nobj.freeze\n\np(obj.equal?(obj))          #=> true\np(obj == obj)               #=> true\np(obj.frozen?)              #=> true\np(obj.respond_to?(:fuga))   #=> true\n\nobj_c = obj.clone\n\np(obj.equal?(obj_c))        #=> false\np(obj == obj_c)             #=> true\np(obj_c.frozen?)            #=> true\np(obj_c.respond_to?(:fuga)) #=> true",
+      "example": "class Foo\n  X = 1\n  @@cv = :foo\n  def x = X\n  def cv = @@cv\nend\n\nBar = Foo.clone\nBar.send(:remove_const, :X)\nBar.const_set(:X, 2)\nBar.class_variable_set(:@@cv, :bar)\n\np Bar::X     # => 2\np Bar.new.x  # => 2\np Bar.new.cv # => :bar\np Foo.new.x  # => 1",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Object/i/clone.html"
     },
     {
@@ -14538,7 +14541,7 @@
       "class_name": "ObjectSpace",
       "method_kind": "module_function",
       "signatures": [
-        "garbage_collect(full_mark: true, immediate_sweep: true) -> nil"
+        "garbage_collect(full_mark: true, immediate_mark: true, immediate_sweep: true) -> nil"
       ],
       "description": "どこからも参照されなくなったオブジェクトを回収します。\n[m:GC.start] と同じです。",
       "example": null,
@@ -16276,7 +16279,7 @@
       "class_name": "Ractor",
       "method_kind": "class_method",
       "signatures": [
-        "Ractor.shareable_lambda { ... } -> Proc"
+        "Ractor.shareable_lambda(self: nil) { ... } -> Proc"
       ],
       "description": "[m:Ractor.shareable_proc] と同じですが、lambda である [c:Proc] を返します。",
       "example": "l = Ractor.shareable_lambda { 42 }\np Ractor.shareable?(l) # => true\np l.lambda?            # => true",
@@ -16287,7 +16290,7 @@
       "class_name": "Ractor",
       "method_kind": "class_method",
       "signatures": [
-        "Ractor.shareable_proc { ... } -> Proc"
+        "Ractor.shareable_proc(self: nil) { ... } -> Proc"
       ],
       "description": "与えられたブロックから shareable な [c:Proc] を作成して返します。",
       "example": "pr = Ractor.shareable_proc { 42 }\np Ractor.shareable?(pr) # => true\np pr.lambda?            # => false\n\np Ractor.shareable?(proc { 42 }) # => false （通常の Proc は shareable ではない）\n\n# 他の Ractor に渡して呼び出せる\np Ractor.new(pr) {|p| p.call }.value # => 42",
@@ -18607,10 +18610,10 @@
       "class_name": "Set",
       "method_kind": "instance_method",
       "signatures": [
-        "merge(enum) -> self"
+        "merge(*enums) -> self"
       ],
-      "description": "元の集合に enum で与えられた要素を追加します。",
-      "example": "set = Set[10, 20]\nset.merge([10, 30])\np set # => Set[10, 20, 30]",
+      "description": "元の集合に enums で与えられた要素を追加します。",
+      "example": "set = Set[10, 20]\nset.merge([10, 30])\np set # => Set[10, 20, 30]\nset.merge([30, 40], [50])\np set # => Set[10, 20, 30, 40, 50]",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Set/i/merge.html"
     },
     {
@@ -20110,10 +20113,10 @@
       "class_name": "String",
       "method_kind": "instance_method",
       "signatures": [
-        "unpack(template) -> Array"
+        "unpack(template, offset: 0) -> Array"
       ],
       "description": "[m:Array#pack] で生成された文字列をテンプレート文字列 template にしたがってアンパックし、それらの要素を含む配列を返します。",
-      "example": null,
+      "example": "p \"\\x01\\x02\\x03\".unpack(\"C\", offset: 1)  # => [2]\np \"abc\".unpack(\"C*\", offset: 3)           # => []\n\"\\x01\".unpack(\"C\", offset: 5)             # ~> ArgumentError: offset outside of string",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/String/i/unpack.html"
     },
     {
@@ -20121,7 +20124,7 @@
       "class_name": "String",
       "method_kind": "instance_method",
       "signatures": [
-        "unpack1(format) -> object"
+        "unpack1(format, offset: 0) -> object"
       ],
       "description": "formatにしたがって文字列をデコードし、展開された1つ目の値を返します。\nunpackは配列を返しますがunpack1は配列の1つ目の要素のみを返します。",
       "example": "p \"ABC\".unpack1(\"C*\") # => 65\np \"ABC\".unpack(\"C*\")  # => [65, 66, 67]",
@@ -21023,10 +21026,12 @@
       "class_name": "Thread",
       "method_kind": "instance_method",
       "signatures": [
-        "raise(error_type, message, traceback)     -> ()"
+        "raise                                                        -> ()",
+        "raise(message, cause: $!)                                    -> ()",
+        "raise(error_type, message = nil, traceback = nil, cause: $!) -> ()"
       ],
       "description": "自身が表すスレッドで強制的に例外を発生させます。",
-      "example": null,
+      "example": "th = Thread.new do\n  begin\n    sleep\n  rescue => e\n    e\n  end\nend\nsleep 0.1 until th.status == \"sleep\"\nth.raise(ArgumentError, \"foo\", cause: RuntimeError.new(\"bar\"))\ne = th.value\np e        # => #<ArgumentError: foo>\np e.cause  # => #<RuntimeError: bar>",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Thread/i/raise.html"
     },
     {
@@ -21654,9 +21659,9 @@
       "class_name": "Thread::Queue",
       "method_kind": "instance_method",
       "signatures": [
-        "pop(non_block = false) -> object",
-        "shift(non_block = false) -> object",
-        "deq(non_block = false) -> object"
+        "pop(non_block = false, timeout: nil) -> object | nil",
+        "shift(non_block = false, timeout: nil) -> object | nil",
+        "deq(non_block = false, timeout: nil) -> object | nil"
       ],
       "description": "キューからひとつ値を取り出します。キューが空の時、呼出元のスレッドは停止します。",
       "example": "q = Thread::Queue.new\n\nth1 = Thread.start do\n  while resource = q.pop\n    puts resource\n  end\nend\n\n[:resource1, :resource2, :resource3, nil].each { |r|\n  q.push(r)\n}\n\nth1.join",
@@ -21713,8 +21718,8 @@
       "class_name": "Thread::SizedQueue",
       "method_kind": "instance_method",
       "signatures": [
-        "push(obj, non_block = false) -> ()",
-        "enq(obj, non_block = false)  -> ()",
+        "push(obj, non_block = false, timeout: nil) -> self | nil",
+        "enq(obj, non_block = false, timeout: nil)  -> self | nil",
         "<<(obj)                      -> ()"
       ],
       "description": "キューに与えられたオブジェクトを追加します。",
@@ -21737,9 +21742,9 @@
       "class_name": "Thread::SizedQueue",
       "method_kind": "instance_method",
       "signatures": [
-        "pop(non_block = false)   -> object",
-        "shift(non_block = false) -> object",
-        "deq(non_block = false)   -> object"
+        "pop(non_block = false, timeout: nil)   -> object | nil",
+        "shift(non_block = false, timeout: nil) -> object | nil",
+        "deq(non_block = false, timeout: nil)   -> object | nil"
       ],
       "description": "キューからひとつ値を取り出します。\nキューに push しようと待っているスレッドがあれば、実行を再開させます。",
       "example": "q = Thread::SizedQueue.new(4)\n\nth1 = Thread.start do\n  while resource = q.pop\n    puts resource\n  end\nend\n\n[:resource1, :resource2, :resource3, nil].each{|r|\n  q.push(r)\n}\n\np th1.join\n# => resource1\n# resource2\n# resource3",
@@ -22452,8 +22457,8 @@
       "class_name": "TracePoint",
       "method_kind": "instance_method",
       "signatures": [
-        "enable         -> bool",
-        "enable { ... } -> object"
+        "enable(target: nil, target_line: nil, target_thread: nil)         -> bool",
+        "enable(target: nil, target_line: nil, target_thread: nil) { ... } -> object"
       ],
       "description": "self のトレースを有効にします。",
       "example": "p trace.enabled?  # => false\np trace.enable  # => false (実行前の状態)\n\n# トレースが有効\n\np trace.enabled?  # => true\np trace.enable  # => true (実行前の状態)\n\n# 引き続きトレースが有効",
