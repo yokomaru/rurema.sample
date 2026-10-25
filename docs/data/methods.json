@@ -4497,7 +4497,7 @@
       "method_kind": "instance_method",
       "signatures": [
         "to_set(klass = Set, *args) -> Set",
-        "to_set(klass = Set, *args) {|o| ... } -> Set"
+        "to_set(klass = Set, *args, &block) -> Set"
       ],
       "description": "Enumerable オブジェクトの要素から、新しい集合オブジェクトを作ります。",
       "example": "p [30, 10, 20].to_set\n#=> Set[30, 10, 20]\nMySet = Class.new(Set)\np [30, 10, 20].to_set(MySet)\n# warning: passing arguments to Enumerable#to_set is deprecated\n#=> #<MySet: {30, 10, 20}>\np [30, 10, 20].to_set {|num| num / 10}\n#=> Set[3, 1, 2]",
