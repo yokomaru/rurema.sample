@@ -16237,7 +16237,7 @@
         "Ractor.new(*args, name: nil) {|*args| ... } -> Ractor"
       ],
       "description": "Ractor を生成して、ブロックの評価を開始します。\n生成した Ractor を返します。",
-      "example": null,
+      "example": "a = 1\nRactor.new { a } # ~> ArgumentError",
       "rurema_url": "https://docs.ruby-lang.org/ja/4.0/method/Ractor/s/new.html"
     },
     {
